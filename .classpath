@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry kind="src" path="support"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/android.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/c3p0-0.9.2.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/commons-io-1.2.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/commons-pool-1.6.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/gson-2.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/jedis-2.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/jenkins-cli.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/junit-dep-4.11.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/mongo-2.9.3.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/poi-3.9.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/poi-ooxml-3.9.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/poi-ooxml-schemas-3.7-beta1.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/report.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/uiautomator.jar"/>
+	<classpathentry kind="lib" path="/Users/yashpreet/Documents/Workspace/Upgrade_Test/lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
