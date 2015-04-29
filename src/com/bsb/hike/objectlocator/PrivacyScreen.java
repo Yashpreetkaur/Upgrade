@@ -16,6 +16,8 @@ public class PrivacyScreen {
 	public static String  TURNING_OFF_LAST_SEEN_LBL= "Turning off last seen will hide your favorites' last seen status from you as well";
 	public static String  SSL_LBL= "128-bit SSL";
 	public static String  WIFI_ONLY_LBL= "Wi-Fi only";
+	public static String FAVOURITE_LBL="Favorites";
+	public static String ADD_REMOVE_LBL="Add/Remove users from favorites";
 	public static String RESET_HIDDEN_MODE_LBL = "Reset Hidden Mode";
 	public static String FORGOT_YOUR_PASSWORD_LBL = "Forgot your password? Reset Hidden Mode. All hidden chats will be deleted.";
 	public static String CHANGE_PASSWORD_LBL = "Change Password";

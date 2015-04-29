@@ -215,10 +215,10 @@ public class UpdateLibrary_3_7_0 extends UpdateLibrary {
 				UiDevice.getInstance().pressBack();
 				startChat= getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 				counter++;
-//				UiObject nux = getElement(Locators.NAME, "Express more with stickers and chat with your best friends!",5000);
-//				if(isElementPresentOnScreen(nux)){
-//					clickOnElement(Locators.NAME, "SKIP");
-//				}
+				//				UiObject nux = getElement(Locators.NAME, "Express more with stickers and chat with your best friends!",5000);
+				//				if(isElementPresentOnScreen(nux)){
+				//					clickOnElement(Locators.NAME, "SKIP");
+				//				}
 			}	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -406,6 +406,28 @@ public class UpdateLibrary_3_7_0 extends UpdateLibrary {
 			e.printStackTrace();
 		}
 	}
-
+	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version,UpdateLibrary ul){
+		try {
+			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE...3.9.0.55");
+			super.goToHome();
+			super.openOverflowMenu();
+			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
+			clickOnElement(Locators.NAME, SettingsScreen.MEDIA_LBL);
+			UiObject Auto_Download_media = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_CONNECTED_TO_WIFI_LBL);
+			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
+			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
+			for(int i=1 ; i<7 ; i++){
+				System.out.println(i);
+				UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
+				boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i-1);
+				System.out.println(wasChecked);
+				boolean isChecked = object.isChecked();	
+				System.out.println(isChecked);
+				Assert.assertTrue(wasChecked==isChecked);	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
 

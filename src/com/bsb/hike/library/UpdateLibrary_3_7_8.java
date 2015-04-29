@@ -297,6 +297,7 @@ public class UpdateLibrary_3_7_8 extends UpdateLibrary{
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
 			clickOnElement(Locators.NAME, SettingsScreen.AUTO_DOWNLOAD_MEDIA_LBL);
 //||version.equals("3.7.8"))
+			
 			if(version.equals("3.8.9") || version.equals("3.8.8") || version.equals("3.8.7") || version.equals("3.8.6") || version.equals("3.8.0")){
 				UiObject compressedVideo = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(0));
 				compressedVideo.click();

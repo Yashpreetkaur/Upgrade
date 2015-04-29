@@ -2,7 +2,10 @@ package com.bsb.hike.library;
 
 
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -95,37 +98,31 @@ public class HikeLibrary extends UiAutomatorLibrary{
 	public static String TEST_CHAT_MESSAGE ="Test Message";
 	public static String TEST_GROUP_CHAT_MESSAGE = "Group Chat Message";
 
+	
+	
 	public static String HIKE_CONTACT_NAME ="FirstTestUser";
-	public static String HIKE_NUMBER_1 = "+911141429708";
-
-	public static String HIKE_CONTACT_NAME_1 ="SecondTestUser";
-	public static String HIKE_NUMBER_2 = "+911193628938";
-
-	public static String HIKE_CONTACT_NAME_2 ="ThirdTestUser";
-	public static String HIKE_NUMBER_3 = "+911122500717";
-
-	public static String HIKE_CONTACT_NAME_3 ="FourthTestUser";
-	public static String HIKE_NUMBER_4 = "+911185353221";
-	
-	public static String HIKE_CONTACT_NAME_4 ="FifthTestUser";
-	public static String HIKE_NUMBER_5 = "+911185353227";
-	
-
-
-	public static String INTERNATIONAL_HIKE_USER ="INTERNATIONALHIKEUSER";
-	public static String INTERNATIONAL_HIKE_NUMBER = "+14157794453";
-
-
-
-
+    public static String HIKE_NUMBER_1 = "+914444440001";
+  
+    public static String HIKE_CONTACT_NAME_1 ="SecondTestUser";
+    public static String HIKE_NUMBER_2 = "+914444440002";
+    
+    public static String HIKE_CONTACT_NAME_2 ="ThirdTestUser";
+    public static String HIKE_NUMBER_3 = "+914444440003";
+    
+    public static String HIKE_CONTACT_NAME_3 ="FourthTestUser";
+    public static String HIKE_NUMBER_4 = "+914444440004";
+    
+    public static String HIKE_CONTACT_NAME_4 ="FifthTestUser";
+    public static String HIKE_NUMBER_5 = "+914444440005";
+  
+    public static String INTERNATIONAL_HIKE_USER ="INTERNATIONALHIKEUSER";
+    public static String INTERNATIONAL_HIKE_NUMBER = "+447903524281";
 
 	public static String HIKE_SMS_CONTACT_NAME_1 ="HikeSMSContact";
 	public static String HIKE_SMS_CONTACT_NUMBER_1 ="+911231231232";
 
 	public static String HIKE_SMS_CONTACT_NAME_2 ="SecondHikeSMSContact";
 	public static String HIKE_SMS_CONTACT_NUMBER_2 ="+911231234321";
-
-
 
 	public static String HIKE_SMS_CONTACT_NAME_3 ="ThirdHikeSMSContact";
 	public static String HIKE_SMS_CONTACT_NUMBER_3 ="+911231265473";
@@ -134,13 +131,13 @@ public class HikeLibrary extends UiAutomatorLibrary{
 	public static String HIKE_SMS_CONTACT_NUMBER_4 ="+911231233487";
 
 	public static String HIKE_DND_NAME_1 ="HikeDNDUser";
-	public static String HIKE_DND_NUMBER_1 ="+919540752593";
+	public static String HIKE_DND_NUMBER_1 ="+919818461120";
 
 	HashMap<String, String> Contacts = new HashMap<String, String>();
 
 
-	public static String DEF_DIGIT ="444444";
-	public static String DEFAULT_MSISDN = DEF_DIGIT+"6680"; //RandomStringUtils.randomNumeric(4);
+	public static String DEF_DIGIT ="711777";
+	public static String DEFAULT_MSISDN ; //RandomStringUtils.randomNumeric(4);
 
 
 	//	public static void main(String args[]){
@@ -157,21 +154,71 @@ public class HikeLibrary extends UiAutomatorLibrary{
 
 	}
 	public static String getDEFAULT_MSISDN_Create(){
+		setDEFAULT_MSISDN();
 		return DEFAULT_MSISDN;
 
 	}
+	public void set_MSISDN_from_settings() throws UiObjectNotFoundException, InterruptedException
+	{ 
+		goToHome();
+		openOverflowMenu();
+		clickOnElement(Locators.NAME ,OverFlowListScreen.SETTINGS_LBL); 
+		try{
+			UiObject l_layout=getElement(Locators.CLASSNAME, AndroidClassNames.LINEAR_LAYOUT, 1);
+			l_layout.click();
+			UiObject msidn=getElement(Locators.CLASSNAME, AndroidClassNames.TEXT_VIEW, 1);
+			String MSIDN =   msidn.getText();
+			DEFAULT_MSISDN = MSIDN.substring(2);
+
+			Properties properties = new Properties();
+			properties.setProperty("msisdn", DEFAULT_MSISDN);
+
+			File file = new File("./local.properties");
+			FileOutputStream fileOut = new FileOutputStream(file);
+			properties.store(fileOut, "Local properties");
+			fileOut.close();
+
+		}catch(Exception e){
+			e.getMessage();
+		} 
+	}
+
+	public void set_MSISDN( String num) throws UiObjectNotFoundException, InterruptedException
+	{ 
+		String prop = "sdk.dir=/Users/yashpreet/Documents/adt-bundle-mac-x86_64-20140702/sdk \n" +
+				"msisdn="+num;
+
+		FileWriter	output=null;
+		try {
+
+			output = new FileWriter("/data/local/tmp/local.properties");
+			output.write(prop);
+
+		} catch (IOException io) {
+			io.printStackTrace();
+		} finally {
+			if (output != null) {
+				try {
+					output.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+	}
 
 	public static String getDEFAULT_MSISDN() {
-		//		setDEFAULT_MSISDN();
+		setDEFAULT_MSISDN();
 		return "+91"+DEFAULT_MSISDN;
 	}
 	public static void setDEFAULT_MSISDN(){
-		//		try {
-		////			DEFAULT_MSISDN=getMsisdn();
-		//		} catch (IOException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
+		try {
+			DEFAULT_MSISDN=getMsisdn();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public static  String getMsisdn() throws IOException {
 
@@ -182,7 +229,6 @@ public class HikeLibrary extends UiAutomatorLibrary{
 		prop.load(reader);
 
 		String msisdn = prop.getProperty("msisdn");
-
 		return msisdn;
 	}
 	/***************************************************************************************************************************************************************

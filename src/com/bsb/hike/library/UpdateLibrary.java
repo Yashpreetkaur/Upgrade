@@ -88,8 +88,8 @@ public class UpdateLibrary extends HikeLibrary{
 	public RedisServiceManagerUtil redis = RedisServiceManagerUtil.getInstance();
 	public MongoDBManagerUtil mongo = MongoDBManagerUtil.getInstance();
 	public  DB userDB = mongo.getMongo().getDB("userdb");
-	public String[] appVersions = {"3.8.6"};	//, "2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
-	public String newAppVersion = "3.8.9.57";
+	public String[] appVersions = {"3.9.0","3.8.9","3.8.8","3.8.6"};	////, "2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
+	public String newAppVersion = "3.9.0.55";
 	public HashMap<String, List<String>> hikeMsgHm =new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsgSm=new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsGrp=new HashMap<String, List<String>>(); ;
@@ -497,29 +497,29 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifyDataPersistence(String version, String newVersion){
+	public void verifyDataPersistence(String version, String newVersion, UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING DATA PERSISTENCE");
 			verifyEditedProfile();
-			verifyHikeMessagePersistence(version);
-			verifySmsMessagePersistence(version);
-			verifyGroupChatPersistence(version);
-			verifyStatusUpdatePersistence(version);
-			verifySmsCountPersistence();
-			verifyAppBuildNumber(newAppVersion);
-			verifyNotificationsCheckboxPersistence(version);
-			verifyAutoDownloadCheckboxPersistence(version, newVersion);
-			verifyPrivacyCheckboxPersistence();
-			verifyFavoriteListPersistence();
-			verifyBlockedUserPersistance(version);
+			verifyHikeMessagePersistence(newVersion,ul);
+			verifySmsMessagePersistence(newVersion,ul);
+			verifyGroupChatPersistence(newVersion,ul);
+			verifyStatusUpdatePersistence(newVersion);
+			verifySmsCountPersistence(ul);
+			verifyAppBuildNumber(newVersion);
+			verifyNotificationsCheckboxPersistence(newVersion,ul);
+			verifyAutoDownloadCheckboxPersistence(version, newVersion,ul);
+			verifyPrivacyCheckboxPersistence(ul);
+			verifyFavoriteListPersistence(ul);
+			verifyBlockedUserPersistance(newVersion,ul);
 			verifyAppVersionPersistenceFromServer();
 			verifyStickerDownloadedStatus();
-//			verifyStickerEnableDisablePersistance();
+			//			verifyStickerEnableDisablePersistance();
 			verifyAddedMemberToGroupPersists();
-			verifyPinPersist(version);
+			verifyPinPersist(newVersion);
 			verifyCreatedGroupAndMemberCountPersist();
-			verifyShareContentPersistance(version);
-			verifySharedMediaPersistance(version);
+			verifyShareContentPersistance(newVersion);
+			verifySharedMediaPersistance(newVersion);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Error while validating data persistence..");
@@ -562,7 +562,7 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifyHikeMessagePersistence(String old_version){
+	public void verifyHikeMessagePersistence(String old_version,UpdateLibrary ul){
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping hike message persistance test as old verison does not support backup");
@@ -571,10 +571,10 @@ public class UpdateLibrary extends HikeLibrary{
 				super.goToHome();
 				//			clickOnElementContinueOnFail(Locators.NAME, objLocator.start_Adding_Favourites_BTN);
 				//	        clickOnElementContinueOnFail(Locators.NAME, objLocator.skip_BTN);
-				String contactName = hikeMsgHm.keySet().iterator().next();
+				String contactName = ul.hikeMsgHm.keySet().iterator().next();
 				System.out.println(contactName);
 				List<String> listOfMessages = new ArrayList<String>();
-				listOfMessages = hikeMsgHm.get(contactName);
+				listOfMessages = ul.hikeMsgHm.get(contactName);
 				Assert.assertTrue("No contact found.." , isElementPresentOnScreen(Locators.NAME,contactName));
 				System.out.println(listOfMessages.get(0));
 				System.out.println(listOfMessages.get(1));
@@ -593,16 +593,16 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifySmsMessagePersistence(String old_version){
+	public void verifySmsMessagePersistence(String old_version,UpdateLibrary ul){
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping sms message persistance test as old version does not support backup");
 			} else {		
 				System.out.println("VERIFYING sms MESSAGE PERSISTENCE");
-				String contactName = hikeMsgSm.keySet().iterator().next();
+				String contactName = ul.hikeMsgSm.keySet().iterator().next();
 				System.out.println(contactName);
 				List<String> listOfMessages = new ArrayList<String>();
-				listOfMessages = hikeMsgSm.get(contactName);
+				listOfMessages = ul.hikeMsgSm.get(contactName);
 				Assert.assertTrue("No contact found.." , isElementPresentOnScreen(Locators.NAME,contactName));
 				System.out.println(listOfMessages.get(0));
 				//System.out.println(listOfMessages.get(1));
@@ -620,16 +620,16 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifyGroupChatPersistence(String old_version){
+	public void verifyGroupChatPersistence(String old_version,UpdateLibrary ul){
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping group chat persistance as old version does not support backup");
 			} else {
 				System.out.println("VERIFYING GROUP MESSAGE PERSISTENCE");
-				String groupName = hikeMsGrp.keySet().iterator().next();
+				String groupName = ul.hikeMsGrp.keySet().iterator().next();
 				System.out.println(groupName);
 				List<String> listOfMessages = new ArrayList<String>();
-				listOfMessages = hikeMsGrp.get(groupName);
+				listOfMessages = ul.hikeMsGrp.get(groupName);
 				System.out.println(listOfMessages.get(0));
 				System.out.println(listOfMessages.get(1));
 				Assert.assertTrue("No contact found.." , isElementPresentOnScreen(Locators.NAME,groupName));
@@ -735,7 +735,7 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifySmsCountPersistence(){
+	public void verifySmsCountPersistence(UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING SMS COUNT PERSISTENCE");
 			super.goToHome();
@@ -748,7 +748,7 @@ public class UpdateLibrary extends HikeLibrary{
 			int smsCountFromUIAfterUpgrade = Integer.parseInt(smsElementAfterUpgrade.getText().split(":")[1].split("\\)")[0].trim());
 			System.out.println("UI"+smsCountFromUIAfterUpgrade);
 			System.out.println("smsCountFromUIAfterUpgrade"+smsCountFromUIAfterUpgrade);
-			Assert.assertTrue(Integer.parseInt(smsCountOnUiBeforeUpgrade) == smsCountFromUIAfterUpgrade);
+			Assert.assertTrue(Integer.parseInt(ul.smsCountOnUiBeforeUpgrade) == smsCountFromUIAfterUpgrade);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Sms count after upgrade not same");
@@ -756,7 +756,7 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 
-	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version){
+	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version,UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE");
 			super.goToHome();
@@ -767,13 +767,14 @@ public class UpdateLibrary extends HikeLibrary{
 			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
 			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
 
-			if(new_version.equals("3.8.9.57")){
+			if(new_version.equals("3.9.0.55")){
+
 				if(old_version.equals("3.7.0") || old_version.equals("3.6.6") || old_version.equals("3.6.0") || old_version.equals("3.5.1"))
 				{
 					for(int i=1 ; i<7 ; i++){	
 						System.out.println(i);
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
-						boolean wasChecked = autoDownloadCheckboxStatus.get(i-1);
+						boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i-1);
 						System.out.println(wasChecked);
 						boolean isChecked = object.isChecked();	
 						System.out.println(isChecked);
@@ -784,7 +785,7 @@ public class UpdateLibrary extends HikeLibrary{
 					for(int i=0 ; i<7 ; i++){	
 						System.out.println(i);
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
-						boolean wasChecked = autoDownloadCheckboxStatus.get(i);
+						boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i);
 						System.out.println(wasChecked);
 						boolean isChecked = object.isChecked();	
 						System.out.println(isChecked);
@@ -806,13 +807,13 @@ public class UpdateLibrary extends HikeLibrary{
 						}
 					}
 					else {
-//						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
-//						boolean wasChecked = autoDownloadCheckboxStatus.get(i);
-//						boolean isChecked = object.isChecked();
-//						Assert.assertTrue(wasChecked==isChecked);
-						
+						//						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
+						//						boolean wasChecked = autoDownloadCheckboxStatus.get(i);
+						//						boolean isChecked = object.isChecked();
+						//						Assert.assertTrue(wasChecked==isChecked);
+
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
-						boolean wasChecked = autoDownloadCheckboxStatus.get(i-1);
+						boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i-1);
 						System.out.println(wasChecked);
 						boolean isChecked = object.isChecked();	
 						System.out.println(isChecked);
@@ -825,7 +826,7 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifyNotificationsCheckboxPersistence(String old_version){
+	public void verifyNotificationsCheckboxPersistence(String old_version, UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING NOTIFICATION SETTING PERSISTENCE");
 			super.goToHome();
@@ -839,7 +840,7 @@ public class UpdateLibrary extends HikeLibrary{
 				if(old_version.startsWith("2.")&&(!old_version.equals("2.9.6"))&&(!old_version.equals("2.9.7"))){
 					if(i==0){
 						//vibrate
-						boolean wasChecked = notificationCheckboxStatus.get(i);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(i);
 						if(wasChecked){
 							clickOnElement(Locators.NAME, "Vibrate on new message");
 							UiObject default_btn=getElement(Locators.NAME, "Default");
@@ -856,7 +857,7 @@ public class UpdateLibrary extends HikeLibrary{
 					}
 					else if(i==2){
 						//led
-						boolean wasChecked = notificationCheckboxStatus.get(2);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(2);
 						if(wasChecked){
 							clickOnElement(Locators.NAME, "Flash the LED on new message");
 							UiObject White=getElement(Locators.NAME, "White");
@@ -874,7 +875,7 @@ public class UpdateLibrary extends HikeLibrary{
 					}
 					else if(i==3){
 						//hike jingle
-						boolean wasChecked = notificationCheckboxStatus.get(1);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(1);
 						if(wasChecked){
 							clickOnElement(Locators.NAME, "Select a sound to play for a new notification");
 							UiObject HikeJingle=getElement(Locators.NAME, "HikeJingle");
@@ -899,7 +900,7 @@ public class UpdateLibrary extends HikeLibrary{
 					}
 					else{
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(count));
-						boolean wasChecked = notificationCheckboxStatus.get(i);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(i);
 						boolean isChecked = object.isChecked();
 						System.out.println(wasChecked);
 						System.out.println(isChecked);
@@ -920,7 +921,7 @@ public class UpdateLibrary extends HikeLibrary{
 					}
 					else if(i==2){
 						//led
-						boolean wasChecked = notificationCheckboxStatus.get(2);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(2);
 						if(wasChecked){
 							clickOnElement(Locators.NAME, "Flash the LED on new message");
 							UiObject White=getElement(Locators.NAME, "White");
@@ -954,7 +955,7 @@ public class UpdateLibrary extends HikeLibrary{
 					}
 					else{
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(count));
-						boolean wasChecked = notificationCheckboxStatus.get(i);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(i);
 						boolean isChecked = object.isChecked();
 
 						Assert.assertTrue(wasChecked==isChecked);
@@ -972,7 +973,7 @@ public class UpdateLibrary extends HikeLibrary{
 					}
 					else if(i==2){
 						//led
-						boolean wasChecked = notificationCheckboxStatus.get(2);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(2);
 						if(wasChecked){
 							clickOnElement(Locators.NAME, "Flash the LED on new message");
 							UiObject White=getElement(Locators.NAME, "HikeJingle");
@@ -1000,7 +1001,7 @@ public class UpdateLibrary extends HikeLibrary{
 					}
 					else{
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(count));
-						boolean wasChecked = notificationCheckboxStatus.get(i);
+						boolean wasChecked = ul.notificationCheckboxStatus.get(i);
 						boolean isChecked = object.isChecked();
 
 						Assert.assertTrue(wasChecked==isChecked);
@@ -1014,14 +1015,14 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifyFavoriteListPersistence(){
+	public void verifyFavoriteListPersistence(UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING FAVORITE LIST PERSISTENCE");
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 			Assert.assertTrue("Favorite does not persist",isElementPresentOnScreen(Locators.NAME,NewChatContactSelectScreen.FAVORITE_LBL));
-			clickOnElement(Locators.NAME, favorite);
-			clickOnElement(Locators.NAME, favorite);
+			clickOnElement(Locators.NAME, ul.favorite);
+			clickOnElement(Locators.NAME, ul.favorite);
 			clickOnElement(Locators.CONTENT_DESCRIPTION,ProfileScreen.OVERFLOW_ICON);
 			Assert.assertTrue("Favorite does not persist",isElementPresentOnScreen(Locators.NAME, ProfileOverflowScreen.REMOVE_FAV_LBL));
 		} catch (Exception e) {
@@ -1109,8 +1110,9 @@ public class UpdateLibrary extends HikeLibrary{
 		//    	Assert.assertTrue("User Not able to Send GC message", isElementPresentOnScreen(objLocator.Hike_GroupMessage_Hint_Text_Txt));
 		Assert.assertTrue("User is not able to Send GC message", isElementPresentOnScreen(Locators.NAME,groupMessage));
 		UiDevice.getInstance().pressBack();
-		UiDevice.getInstance().pressBack();
-
+		if(!isElementPresentOnScreen(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL)){
+			UiDevice.getInstance().pressBack();
+		}
 		Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_MOMENTS_AGO_LBL));
 		Assert.assertTrue("User is not able to Send message", isElementPresentOnScreen(Locators.NAME,groupMessage));
 
@@ -1329,7 +1331,8 @@ public class UpdateLibrary extends HikeLibrary{
 			clickElementInList(Locators.NAME, HIKE_CONTACT_NAME);
 			clickElementInList(Locators.NAME,HIKE_CONTACT_NAME_1);
 			clickOnElement(Locators.NAME,NewGroupParticipantSelectionScreen.DONE_LBL);
-			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME+" and "+HIKE_CONTACT_NAME_1+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
+			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME_1+" and "+HIKE_CONTACT_NAME+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
+			//			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME+" and "+HIKE_CONTACT_NAME_1+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1562,7 +1565,7 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifyBlockedUserPersistance(String old_version){
+	public void verifyBlockedUserPersistance(String old_version,UpdateLibrary ul){
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Verifying blocked user peristance after upgrade from settings");
@@ -1573,7 +1576,7 @@ public class UpdateLibrary extends HikeLibrary{
 				clickOnElement(Locators.NAME,PrivacyScreen.BLOCKED_LIST_LBL);
 				enterText(HIKE_CONTACT_NAME_4);
 				UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(0));					
-				boolean wasChecked = blockUserCheckboxStatus.get(0);
+				boolean wasChecked = ul.blockUserCheckboxStatus.get(0);
 				System.out.println("wasss"+wasChecked);
 				boolean isChecked = object.isChecked();	
 				System.out.println("isss"+isChecked);
@@ -1594,9 +1597,10 @@ public class UpdateLibrary extends HikeLibrary{
 				clickOnElement(Locators.NAME,PrivacyScreen.BLOCKED_LIST_LBL);
 				enterText(HIKE_CONTACT_NAME_4);
 				UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(0));					
-				boolean wasChecked = blockUserCheckboxStatus.get(0);
+				boolean wasChecked = ul.blockUserCheckboxStatus.get(0);
 				System.out.println("wasss"+wasChecked);
 				boolean isChecked = object.isChecked();	
+
 				System.out.println("isss"+isChecked);
 				Assert.assertTrue(wasChecked==isChecked);
 				UiObject object1 = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(0));					
@@ -1641,26 +1645,54 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 
-	public void verifyPrivacyCheckboxPersistence(){
+	public void verifyPrivacyCheckboxPersistence(UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING PRIVACY SETTING PERSISTENCE");
 			super.goToHome();
 			super.openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
 			clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
-			for(int i=0;i<4;i++){
+
+			for(int i=0;i<5;i++){
 				System.out.println(i);
 				if(i==0){
-					boolean wasChecked = privacyCheckboxStatus.get(i);
-					Assert.assertFalse("Blocked list default setting does not persists",wasChecked);					
+					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
+					boolean wasChecked = ul.privacyCheckboxStatus.get(i+1);
+					boolean isChecked = object.isChecked();
+					System.out.println(wasChecked);
+					System.out.println(isChecked);
+					Assert.assertTrue(wasChecked==isChecked);
+				}
+				else if(i==1){
+					UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
+					UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 2);				
+					UiObject lastSeenLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);
+					System.out.println(lastSeenLbl.getText());
+					Assert.assertTrue("Show to everyone is not present",lastSeenLbl.getText().contains("Show Last Seen : Nobody"));
+				}
+				else if (i==2){
+					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i-1));
+					boolean wasChecked = ul.privacyCheckboxStatus.get(i+1);
+					boolean isChecked = object.isChecked();
+					System.out.println(wasChecked);
+					System.out.println(isChecked);
+					Assert.assertTrue(wasChecked==isChecked);
+				}
+				else if (i==3){
+					boolean wasChecked = ul.privacyCheckboxStatus.get(i-3);
+					System.out.println(wasChecked);
+					Assert.assertFalse("Blocked list default setting does not persists",wasChecked);
 				}
 				else{
-					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i-1));
-					boolean wasChecked = privacyCheckboxStatus.get(i);
-					boolean isChecked = object.isChecked();
-					Assert.assertTrue(wasChecked==isChecked);
-				}				
+					UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
+					UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 6);				
+					UiObject favouriteLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);	
+					System.out.println(favouriteLbl.getText());
+					Assert.assertTrue("Favourite privacy setting is not coming", favouriteLbl.getText().equals(PrivacyScreen.FAVOURITE_LBL));
+				}
+
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1759,7 +1791,7 @@ public class UpdateLibrary extends HikeLibrary{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void addDndMemberToGroup(){
 		try {
 			clickOnElement(Locators.NAME, groupName);

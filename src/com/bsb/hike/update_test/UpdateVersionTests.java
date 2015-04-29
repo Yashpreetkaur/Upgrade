@@ -1,4 +1,4 @@
-package com.bsb.hike.update_test;
+ package com.bsb.hike.update_test;
 
 import org.junit.Assert;
 
@@ -18,15 +18,27 @@ import com.bsb.hike.library.UpdateLibrary_3_1_0;
 import com.bsb.hike.library.UpdateLibrary_3_2_0;
 import com.bsb.hike.library.UpdateLibrary_3_3_0;
 import com.bsb.hike.library.UpdateLibrary_3_3_1;
+import com.bsb.hike.library.UpdateLibrary_3_3_5;
+import com.bsb.hike.library.UpdateLibrary_3_5_0;
 import com.bsb.hike.library.UpdateLibrary_3_5_1;
+import com.bsb.hike.library.UpdateLibrary_3_6_0;
+import com.bsb.hike.library.UpdateLibrary_3_6_6;
 import com.bsb.hike.library.UpdateLibrary_3_7_0;
 import com.bsb.hike.library.UpdateLibrary_3_7_8;
+import com.bsb.hike.library.UpdateLibrary_3_8_0;
+import com.bsb.hike.library.UpdateLibrary_3_8_6;
+import com.bsb.hike.library.UpdateLibrary_3_8_7;
+import com.bsb.hike.library.UpdateLibrary_3_8_8;
+import com.bsb.hike.library.UpdateLibrary_3_8_9;
+import com.bsb.hike.library.UpdateLibrary_3_9_0;
+import com.bsb.hike.library.UpdateLibrary_3_9_0_55;
 
 public class UpdateVersionTests extends UpdateLibrary {
 
 
 	UpdateLibrary ul;
-		public void testVersionUpgradeCheckpoints() throws UiObjectNotFoundException, InterruptedException {
+	
+		public void xtestVersionUpgradeCheckpoints() throws UiObjectNotFoundException, InterruptedException {
 			try{
 				System.out.println("DELETE USER UPGRADE TEST"+ appVersions[0]);
 				for(int index=0 ; index < appVersions.length ; index++){//appVersions.length
@@ -66,18 +78,19 @@ public class UpdateVersionTests extends UpdateLibrary {
 					ul.putAppInBackground();
 					ul.updateAppVersion();
 //					//AFTER UPGRADE
-					ul.launchHike();
-					ul.verifyDataPersistence(appVersions[index], newAppVersion);
+					UpdateLibrary new_ver = getVersionLibrary(newAppVersion);
+					new_ver.launchHike();
+					new_ver.verifyDataPersistence(appVersions[index], newAppVersion,ul);
 //					ul.addDndMemberToGroup();
-					ul.ableToSendMessage("+911234555247");
-					ul.sendSticker(appVersions[index]);
-					ul.ableToCreateGc();
-					ul.abletoUpdateStatus();				
+					new_ver.ableToSendMessage("+911234555247");
+					new_ver.sendSticker(newAppVersion);
+					new_ver.ableToCreateGc();
+					new_ver.abletoUpdateStatus();				
 					Thread.sleep(5000);
-					ul.ableToAddFavorite();
+					new_ver.ableToAddFavorite();
 					deleteAllExistingChats();
-					ul.deleteUserAccount();
-					ul.uninstallApp();							
+					new_ver.deleteUserAccount();
+					new_ver.uninstallApp();							
 				}
 			}
 			catch(Exception e) {
@@ -87,10 +100,11 @@ public class UpdateVersionTests extends UpdateLibrary {
 		}
 
 
-	public void xtestVersionUpgradeCheckpoints1() throws UiObjectNotFoundException, InterruptedException {
+	public void testVersionUpgradeCheckpoints1() throws UiObjectNotFoundException, InterruptedException {
 		try{
 			System.out.println("RESET ACCOUNT UPGRADE TEST"+ appVersions[0]);
 			for(int index=0 ; index < appVersions.length ; index++){//appVersions.length
+		
 				hikeMsgHm.clear();
 				hikeMsgSm.clear();
 				hikeMsGrp.clear();
@@ -129,35 +143,36 @@ public class UpdateVersionTests extends UpdateLibrary {
 				ul.putAppInBackground();
 				ul.updateAppVersion();
 				//AFTER UPGRADE
-				ul.launchHike();
-				ul.createNewUser(appVersions[index]);
-				ul.restoreAccount(appVersions[index]);
-				ul.verifyBackUpTextPersistance(appVersions[index]);
-				ul.verifyEditedProfileAfterReset();
-				ul.verifyHikeMessagePersistence(appVersions[index]);
-				ul.verifySmsMessagePersistence(appVersions[index]);
-				ul.verifyGroupChatPersistence(appVersions[index]);
-				ul.verifyStatusUpdatePersistence(appVersions[index]);
-				ul.verifyBlockedUserPersistance(appVersions[index]);
-				ul.verifySmsCountPersistence();
-				ul.verifyAppBuildNumber(newAppVersion);
-				ul.verifyFavoriteListPersistence();
-				ul.verifyAppVersionPersistenceFromServer();
-				ul.verifyAddedMemberToGroupPersists();
-				ul.verifyPinPersist(appVersions[index]);
-				ul.verifyCreatedGroupAndMemberCountPersist();
-				ul.verifyShareContentPersistance(appVersions[index]);
-				ul.verifySharedMediaPersistance(appVersions[index]);
+				UpdateLibrary new_ver = getVersionLibrary(newAppVersion);
+				new_ver.launchHike();
+				new_ver.createNewUser(newAppVersion);
+				new_ver.restoreAccount(newAppVersion);
+				new_ver.verifyBackUpTextPersistance(newAppVersion);
+				new_ver.verifyEditedProfileAfterReset();
+				new_ver.verifyHikeMessagePersistence(newAppVersion,ul);
+				new_ver.verifySmsMessagePersistence(newAppVersion,ul);
+				new_ver.verifyGroupChatPersistence(newAppVersion,ul);
+				new_ver.verifyStatusUpdatePersistence(newAppVersion);
+				new_ver.verifyBlockedUserPersistance(newAppVersion,ul);
+				new_ver.verifySmsCountPersistence(ul);
+				new_ver.verifyAppBuildNumber(newAppVersion);
+				new_ver.verifyFavoriteListPersistence(ul);
+				new_ver.verifyAppVersionPersistenceFromServer();
+				new_ver.verifyAddedMemberToGroupPersists();
+				new_ver.verifyPinPersist(newAppVersion);
+				new_ver.verifyCreatedGroupAndMemberCountPersist();
+				new_ver.verifyShareContentPersistance(newAppVersion);
+				new_ver.verifySharedMediaPersistance(newAppVersion);
 				//ul.addDndMemberToGroup();
-				ul.ableToSendMessage("+911234555247");
-				ul.sendSticker(appVersions[index]);
-				ul.ableToCreateGc();
-				ul.abletoUpdateStatus();				
+				new_ver.ableToSendMessage("+911234555247");
+				new_ver.sendSticker(newAppVersion);
+				new_ver.ableToCreateGc();
+				new_ver.abletoUpdateStatus();				
 				Thread.sleep(5000);
-				ul.ableToAddFavorite();
+				new_ver.ableToAddFavorite();
 				deleteAllExistingChats();
-				ul.deleteUserAccount();
-				ul.uninstallApp();							
+				new_ver.deleteUserAccount();
+				new_ver.uninstallApp();							
 			}
 		}
 		catch(Exception e) {
@@ -210,19 +225,19 @@ public class UpdateVersionTests extends UpdateLibrary {
 			ul=new UpdateLibrary_3_3_1();
 		}
 		else if(version.equals("3.3.5")){
-			ul=new UpdateLibrary_3_3_1();
+			ul=new UpdateLibrary_3_3_5();
 		}
 		else if(version.equals("3.5.0")){
-			ul=new UpdateLibrary_3_3_1();
+			ul=new UpdateLibrary_3_5_0();
 		}
 		else if(version.equals("3.5.1")){
 			ul=new UpdateLibrary_3_5_1();
 		}
 		else if(version.equals("3.6.0")){
-			ul=new UpdateLibrary_3_5_1();
+			ul=new UpdateLibrary_3_6_0();
 		}
 		else if(version.equals("3.6.6")){
-			ul=new UpdateLibrary_3_7_0();
+			ul=new UpdateLibrary_3_6_6();
 		}
 		else if(version.equals("3.7.0")){
 			ul=new UpdateLibrary_3_7_0();
@@ -231,19 +246,25 @@ public class UpdateVersionTests extends UpdateLibrary {
 			ul=new UpdateLibrary_3_7_8();
 		}
 		else if(version.equals("3.8.0")){
-			ul=new UpdateLibrary_3_7_8();
+			ul=new UpdateLibrary_3_8_0();
 		}
 		else if(version.equals("3.8.6")){
-			ul=new UpdateLibrary_3_7_8();
+			ul=new UpdateLibrary_3_8_6();
 		}
 		else if(version.equals("3.8.7")){
-			ul=new UpdateLibrary_3_7_8();
+			ul=new UpdateLibrary_3_8_7();
 		}
 		else if(version.equals("3.8.8")){
-			ul=new UpdateLibrary_3_7_8();
+			ul=new UpdateLibrary_3_8_8();
 		}
 		else if(version.equals("3.8.9")){
-			ul=new UpdateLibrary_3_7_8();
+			ul=new UpdateLibrary_3_8_9();
+		}
+		else if(version.equals("3.9.0")){
+			ul=new UpdateLibrary_3_9_0();
+		}
+		else if(version.equals("3.9.0.55")){
+			ul=new UpdateLibrary_3_9_0_55();
 		}
 		else{
 			ul=new UpdateLibrary();
