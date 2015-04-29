@@ -1020,6 +1020,8 @@ public class UpdateLibrary extends HikeLibrary{
 			System.out.println("VERIFYING FAVORITE LIST PERSISTENCE");
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 			Assert.assertTrue("Favorite does not persist",isElementPresentOnScreen(Locators.NAME,NewChatContactSelectScreen.FAVORITE_LBL));
 			clickOnElement(Locators.NAME, ul.favorite);
 			clickOnElement(Locators.NAME, ul.favorite);
@@ -1065,6 +1067,8 @@ public class UpdateLibrary extends HikeLibrary{
 			String message = "message after upgrade..";
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 			enterText(msisdn);
 
 			clickOnElement(Locators.NAME, NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
@@ -1168,6 +1172,8 @@ public class UpdateLibrary extends HikeLibrary{
 
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 			Assert.assertTrue("not able to add favorite",isElementPresentOnScreen(Locators.NAME,NewChatContactSelectScreen.FAVORITE_LBL));
 			System.out.println("ssssssssssssssssssssssss"+fav_name);
 			clickOnElement(Locators.NAME, fav_name);
@@ -1185,6 +1191,8 @@ public class UpdateLibrary extends HikeLibrary{
 		if (old_version.equals("3.5.1")) {
 			goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 			enterText(HIKE_NUMBER_1);
 			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
 			UiDevice.getInstance().click(40, 760);
@@ -1241,6 +1249,8 @@ public class UpdateLibrary extends HikeLibrary{
 			goToHome();
 
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 			clickOnElement(Locators.NAME, HIKE_CONTACT_NAME);
 			UiObject view = getElement(Locators.CLASSNAME, "android.view.View");
 			UiObject frame = getChild(view, Locators.CLASSNAME, "android.widget.FrameLayout");
@@ -1784,6 +1794,7 @@ public class UpdateLibrary extends HikeLibrary{
 				}       
 			}
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 			enterText(HIKE_NUMBER_1);
 			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
 			super.goToHome();

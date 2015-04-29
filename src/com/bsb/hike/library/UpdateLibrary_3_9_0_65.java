@@ -87,6 +87,8 @@ public class UpdateLibrary_3_9_0_65 extends UpdateLibrary{
 		try {
 			System.out.println("UPDATING PROFILE...3.9.0.65");
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 			enterText(HIKE_NUMBER_1);
 			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
 			goToHome();
@@ -132,6 +134,8 @@ public class UpdateLibrary_3_9_0_65 extends UpdateLibrary{
 		System.out.println("STARTING CHAT WITH UNSAVED USER...3.9.0.65");
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 		enterText(msisdn);
 		clickOnElement(Locators.NAME, "Tap to start chat");
 		//	    	clickOnElement(Locators.NAME,"1");
@@ -144,6 +148,8 @@ public class UpdateLibrary_3_9_0_65 extends UpdateLibrary{
 
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 		//		enterText(msisdn);
 		clickOnElement(Locators.NAME, name);
 		//	    	clickOnElement(Locators.NAME,"1");
@@ -233,6 +239,7 @@ public class UpdateLibrary_3_9_0_65 extends UpdateLibrary{
 			System.out.println("GOING BACK TO HOME SCREEN...3.9.0.65");
 
 			UiObject startChat = getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			
 			while(!startChat.exists() && counter <5){
 				UiDevice.getInstance().pressBack();
 				startChat= getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
@@ -353,6 +360,8 @@ public class UpdateLibrary_3_9_0_65 extends UpdateLibrary{
 			clickOnElement(Locators.NAME, FavoriteScreen.FAV_TITLE_LBL);
 			clickOnElement(Locators.NAME, TimelineScreen.TIMELINE_TITLE_LBL);
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+
 			Assert.assertTrue("Unable to add favorite",isElementPresentOnScreen(Locators.NAME, "FAVORITES"));
 		} catch (Exception e) {
 			e.printStackTrace();
