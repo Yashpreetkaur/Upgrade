@@ -34,9 +34,9 @@ import com.bsb.hike.objectlocator.WelcomeScreen;
 import com.bsb.hike.popup.screen.ConfirmYourNumberPopUpScreen;
 import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 
-public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
+public class UpdateLibrary_3_9_0_65 extends UpdateLibrary{
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
-		System.out.println("CREATING NEW USER...3.9.0.55");
+		System.out.println("CREATING NEW USER...3.9.0.65");
 
 		try {
 			//setting pin for current user
@@ -85,7 +85,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 	}
 	public void updateProfile(){
 		try {
-			System.out.println("UPDATING PROFILE...3.9.0.55");
+			System.out.println("UPDATING PROFILE...3.9.0.65");
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 			enterText(HIKE_NUMBER_1);
 			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
@@ -129,7 +129,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 	}
 
 	public void startSingleChatAndSendMessageToUnsavedNumber(String msisdn , String message  ) throws UiObjectNotFoundException, InterruptedException{
-		System.out.println("STARTING CHAT WITH UNSAVED USER...3.9.0.55");
+		System.out.println("STARTING CHAT WITH UNSAVED USER...3.9.0.65");
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 		enterText(msisdn);
@@ -140,7 +140,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 	}
 
 	public void startSingleChatAndSendMessageToHikeUser(String name , String message  ) throws UiObjectNotFoundException, InterruptedException{
-		System.out.println("STARTING CHAT WITH HIKE USER...3.9.0.55");
+		System.out.println("STARTING CHAT WITH HIKE USER...3.9.0.65");
 
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
@@ -152,7 +152,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 	}
 
 	public void sendMessage() throws UiObjectNotFoundException{
-		System.out.println("Sending Message...3.9.0.55");
+		System.out.println("Sending Message...3.9.0.65");
 		int sendButtonIndex=2;
 
 		UiObject FrameLayout = getElement(Locators.CLASSNAME, AndroidClassNames.FRAME_LAYOUT, 0);
@@ -179,7 +179,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void sendHikeMessage(String version){
 		try {
-			System.out.println("SENDING HIKE MESSAGE...3.9.0.55");
+			System.out.println("SENDING HIKE MESSAGE...3.9.0.65");
 			//			setSMSCredit(100);
 			//			setDEFAULT_MSISDN();
 			List<String> listOfMessages = new ArrayList<String>();
@@ -210,7 +210,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void sendHike2SmsMessage(String version){
 		try {
-			System.out.println("SENDING MESSAGE TO SMS USER...3.9.0.55");
+			System.out.println("SENDING MESSAGE TO SMS USER...3.9.0.65");
 
 			List<String> listOfMessages = new ArrayList<String>();
 			goToHome();
@@ -230,7 +230,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 	public void goToHome(){
 		try {
 			int counter =0;
-			System.out.println("GOING BACK TO HOME SCREEN...3.9.0.55");
+			System.out.println("GOING BACK TO HOME SCREEN...3.9.0.65");
 
 			UiObject startChat = getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 			while(!startChat.exists() && counter <5){
@@ -249,7 +249,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void captureSmsCountBeforeUpgrade(String version){
 		try {
-			System.out.println("CAPTURING SMS COUNT BEFORE UPGRADE...3.9.0.55");
+			System.out.println("CAPTURING SMS COUNT BEFORE UPGRADE...3.9.0.65");
 
 			goToHome();
 			openOverflowMenu();
@@ -268,7 +268,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void openOverflowMenu(){
 		try {
-			System.out.println("Opening Overflow Menu...3.9.0.55");
+			System.out.println("Opening Overflow Menu...3.9.0.65");
 			clickOnElement(Locators.CONTENT_DESCRIPTION,HomeScreen.OVERFLOW_ICON);
 		} catch (UiObjectNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -281,7 +281,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void toggleAutoDownloadCheckbox(String version){
 		try {
-			System.out.println("CHANGING AUTO DOWNLOAD SETTINGS...3.9.0.55");
+			System.out.println("CHANGING AUTO DOWNLOAD SETTINGS...3.9.0.65");
 
 			goToHome();
 			openOverflowMenu();
@@ -333,7 +333,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void addHikeContactAsFavorite(String version){
 		try {
-			System.out.println("ADDING AS FAVORITE...3.9.0.55");
+			System.out.println("ADDING AS FAVORITE...3.9.0.65");
 			exitHike();
 			launchHikeWithoutWaitingForPopup();
 			goToHome();
@@ -361,7 +361,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void setStatusUpdate() throws UiObjectNotFoundException, InterruptedException {
 		try {
-			System.out.println("SETTING STATUS UPDATE...3.9.0.55");
+			System.out.println("SETTING STATUS UPDATE...3.9.0.65");
 			goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.OVERFLOW_ICON);
 			clickOnElement(Locators.NAME,"Timeline");
@@ -393,7 +393,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 	}
 	public void toggleNotificationCheckbox(){
 		try {
-			System.out.println("CHANGING NOTIFICATION SETTINGS...3.9.0.55");
+			System.out.println("CHANGING NOTIFICATION SETTINGS...3.9.0.65");
 			goToHome();
 			openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -428,7 +428,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 
 	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version,UpdateLibrary ul){
 		try {
-			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE...3.9.0.55");
+			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE...3.9.0.65");
 			super.goToHome();
 			super.openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -437,7 +437,7 @@ public class UpdateLibrary_3_9_0_55 extends UpdateLibrary{
 			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
 			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
 
-			if(new_version.equals("3.9.0.55")){			
+			if(new_version.equals("3.9.0.65")){			
 				if(old_version.equals("3.7.0") || old_version.equals("3.6.6") || old_version.equals("3.6.0") || old_version.equals("3.5.1"))
 				{
 					for(int i=1 ; i<7 ; i++){	
