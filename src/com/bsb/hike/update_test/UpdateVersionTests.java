@@ -31,14 +31,14 @@ import com.bsb.hike.library.UpdateLibrary_3_8_7;
 import com.bsb.hike.library.UpdateLibrary_3_8_8;
 import com.bsb.hike.library.UpdateLibrary_3_8_9;
 import com.bsb.hike.library.UpdateLibrary_3_9_0;
-import com.bsb.hike.library.UpdateLibrary_3_9_0_65;
+import com.bsb.hike.library.UpdateLibrary_3_9_0_74;
 
 public class UpdateVersionTests extends UpdateLibrary {
 
 
 	UpdateLibrary ul;
 	
-		public void xtestVersionUpgradeCheckpoints() throws UiObjectNotFoundException, InterruptedException {
+		public void testVersionUpgradeCheckpoints() throws UiObjectNotFoundException, InterruptedException {
 			try{
 				System.out.println("DELETE USER UPGRADE TEST"+ appVersions[0]);
 				for(int index=0 ; index < appVersions.length ; index++){//appVersions.length
@@ -100,7 +100,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 		}
 
 
-	public void testVersionUpgradeCheckpoints1() throws UiObjectNotFoundException, InterruptedException {
+	public void xtestVersionUpgradeCheckpoints1() throws UiObjectNotFoundException, InterruptedException {
 		try{
 			System.out.println("RESET ACCOUNT UPGRADE TEST"+ appVersions[0]);
 			for(int index=0 ; index < appVersions.length ; index++){//appVersions.length
@@ -264,7 +264,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 			ul=new UpdateLibrary_3_9_0();
 		}
 		else if(version.equals("3.9.0.55")){
-			ul=new UpdateLibrary_3_9_0_65();
+			ul=new UpdateLibrary_3_9_0_74();
 		}
 		else{
 			ul=new UpdateLibrary();

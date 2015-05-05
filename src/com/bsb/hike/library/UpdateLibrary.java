@@ -88,8 +88,8 @@ public class UpdateLibrary extends HikeLibrary{
 	public RedisServiceManagerUtil redis = RedisServiceManagerUtil.getInstance();
 	public MongoDBManagerUtil mongo = MongoDBManagerUtil.getInstance();
 	public  DB userDB = mongo.getMongo().getDB("userdb");
-	public String[] appVersions = {"3.9.0","3.8.9","3.8.8","3.8.7","3.8.6"};	////, "2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
-	public String newAppVersion = "3.9.0.65";
+	public String[] appVersions = {"3.8.6","3.8.9","3.8.7","3.8.8","3.9.0"};	////, "2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
+	public String newAppVersion = "3.9.0.74";
 	public HashMap<String, List<String>> hikeMsgHm =new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsgSm=new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsGrp=new HashMap<String, List<String>>(); ;
@@ -767,7 +767,7 @@ public class UpdateLibrary extends HikeLibrary{
 			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
 			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
 
-			if(new_version.equals("3.9.0.55")){
+			if(new_version.equals("3.9.0.74")){
 
 				if(old_version.equals("3.7.0") || old_version.equals("3.6.6") || old_version.equals("3.6.0") || old_version.equals("3.5.1"))
 				{

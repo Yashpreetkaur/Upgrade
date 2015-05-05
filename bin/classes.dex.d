@@ -44,6 +44,8 @@
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_50_2_cpr.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_55.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_65.class \
+/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_73.class \
+/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_74.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/mqtt/client/MqttConnection$1.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/mqtt/client/MqttConnection$Acknowlegement.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/mqtt/client/MqttConnection$MqttReader.class \
