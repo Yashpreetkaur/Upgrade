@@ -6,12 +6,12 @@
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/chatevents/ChatEventsObject.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/chatevents/UJEvents.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/common/AndroidClassNames.class \
-/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/common/AppVersions.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/common/HikeConstants.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/common/Locators.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/http/HTTPService$HttpPostResponse.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/http/HTTPService.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/HikeLibrary.class \
+/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/test.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/ts.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_2_7_0.class \
@@ -41,10 +41,6 @@
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_8_8.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_8_9.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0.class \
-/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_50_2_cpr.class \
-/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_55.class \
-/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_65.class \
-/Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_73.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/library/UpdateLibrary_3_9_0_74.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/mqtt/client/MqttConnection$1.class \
 /Users/yashpreet/Documents/Workspace/Upgrade_Test/bin/classes/com/bsb/hike/mqtt/client/MqttConnection$Acknowlegement.class \

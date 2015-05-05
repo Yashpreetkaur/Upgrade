@@ -1,5 +1,7 @@
 package com.bsb.hike.library;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Assert;
@@ -88,8 +91,8 @@ public class UpdateLibrary extends HikeLibrary{
 	public RedisServiceManagerUtil redis = RedisServiceManagerUtil.getInstance();
 	public MongoDBManagerUtil mongo = MongoDBManagerUtil.getInstance();
 	public  DB userDB = mongo.getMongo().getDB("userdb");
-	public String[] appVersions = {"3.8.6","3.8.9","3.8.7","3.8.8","3.9.0"};	////, "2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
-	public String newAppVersion = "3.9.0.74";
+	public static String[] appVersions=getSetUpgradeOldVersion();	////, "2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
+	public static String newAppVersion=getSetUpgradeNewVersion();
 	public HashMap<String, List<String>> hikeMsgHm =new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsgSm=new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsGrp=new HashMap<String, List<String>>(); ;
@@ -98,7 +101,7 @@ public class UpdateLibrary extends HikeLibrary{
 	public LinkedHashMap<Integer, Boolean> privacyCheckboxStatus=new LinkedHashMap<Integer, Boolean>();
 	public LinkedHashMap<Integer, Boolean> stickerCheckboxStatus= new LinkedHashMap<Integer, Boolean>();
 	public LinkedHashMap<Integer, Boolean> blockUserCheckboxStatus= new LinkedHashMap<Integer, Boolean>();
-	public List<String> suList=new ArrayList<String>()	;
+	public List<String> suList=new ArrayList<String>();
 	String smsUser = "";
 	String smsCountOnUiBeforeUpgrade = "";
 	int smsCountFromRedisBeforeUpgrade = 0;
@@ -106,6 +109,42 @@ public class UpdateLibrary extends HikeLibrary{
 	public String favorite="";
 	public static String textAfterBackup="";
 	String groupName = "apitest";
+
+	public static  String[] getSetUpgradeOldVersion()  {
+
+		try {
+			Properties prop = new Properties();
+			String propFileName = "/data/local/tmp/builds.properties";
+			FileReader reader = new FileReader(propFileName);
+			prop.load(reader);
+			String versions=prop.getProperty("oldAppVersions");
+			String[] oldVersion = versions.split(", ");
+			oldVersion[0]=oldVersion[0].substring(1);
+			oldVersion[oldVersion.length-1]=oldVersion[oldVersion.length-1].substring(0,oldVersion[oldVersion.length-1].length()-1);
+			for(int i=0;i<oldVersion.length;i++)
+				System.out.println(oldVersion[i]);
+			appVersions=oldVersion;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return appVersions;
+	}
+
+	public static String getSetUpgradeNewVersion() {
+		try {
+			String newVersion =null;
+			Properties prop = new Properties();
+			String propFileName = "/data/local/tmp/builds.properties";
+			FileReader reader = new FileReader(propFileName);
+			prop.load(reader);
+			newVersion = prop.getProperty("newAppVersion");
+			System.out.println(newVersion);
+			newAppVersion=newVersion;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return newAppVersion;
+	}
 
 	public void installOldVersionApp(String baseVersion){
 		try {

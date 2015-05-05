@@ -158,31 +158,7 @@ public class HikeLibrary extends UiAutomatorLibrary{
 		return DEFAULT_MSISDN;
 
 	}
-	public void set_MSISDN_from_settings() throws UiObjectNotFoundException, InterruptedException
-	{ 
-		goToHome();
-		openOverflowMenu();
-		clickOnElement(Locators.NAME ,OverFlowListScreen.SETTINGS_LBL); 
-		try{
-			UiObject l_layout=getElement(Locators.CLASSNAME, AndroidClassNames.LINEAR_LAYOUT, 1);
-			l_layout.click();
-			UiObject msidn=getElement(Locators.CLASSNAME, AndroidClassNames.TEXT_VIEW, 1);
-			String MSIDN =   msidn.getText();
-			DEFAULT_MSISDN = MSIDN.substring(2);
-
-			Properties properties = new Properties();
-			properties.setProperty("msisdn", DEFAULT_MSISDN);
-
-			File file = new File("./local.properties");
-			FileOutputStream fileOut = new FileOutputStream(file);
-			properties.store(fileOut, "Local properties");
-			fileOut.close();
-
-		}catch(Exception e){
-			e.getMessage();
-		} 
-	}
-
+	
 	public void set_MSISDN( String num) throws UiObjectNotFoundException, InterruptedException
 	{ 
 		String prop = "sdk.dir=/Users/yashpreet/Documents/adt-bundle-mac-x86_64-20140702/sdk \n" +
@@ -220,6 +196,8 @@ public class HikeLibrary extends UiAutomatorLibrary{
 			e.printStackTrace();
 		}
 	}
+	
+	
 	public static  String getMsisdn() throws IOException {
 
 		Properties prop = new Properties();
