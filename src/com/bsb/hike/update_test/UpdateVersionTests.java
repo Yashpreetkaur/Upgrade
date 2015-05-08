@@ -99,87 +99,6 @@ public class UpdateVersionTests extends UpdateLibrary {
 			}
 		}
 
-
-	public void testVersionUpgradeCheckpoints1() throws UiObjectNotFoundException, InterruptedException {
-		try{
-			System.out.println("RESET ACCOUNT UPGRADE TEST"+ appVersions[0]);
-			for(int index=0 ; index < appVersions.length ; index++){//appVersions.length
-		
-				hikeMsgHm.clear();
-				hikeMsgSm.clear();
-				hikeMsGrp.clear();
-				suList.clear();
-				autoDownloadCheckboxStatus.clear();
-				notificationCheckboxStatus.clear();
-				privacyCheckboxStatus.clear();
-				stickerCheckboxStatus.clear();
-				blockUserCheckboxStatus.clear();
-				//BEFORE UPGRADE
-				ul=getVersionLibrary(appVersions[index]);
-				ul.installOldVersionApp(appVersions[index]);
-				ul.createNewUser(appVersions[index]);
-				setSMSCredit(15);
-				ul.updateProfile();
-				ul.sendHikeMessage(appVersions[index]);
-				ul.sendSticker(appVersions[index]);
-				ul.sendHike2SmsMessage(appVersions[index]);
-				ul.createGcAndSendMessage();
-				ul.addMemberToGroup();
-				ul.addPin();
-				ul.createGCandUpdateName();		
-				ul.shareContentToGroup();
-				ul.shareMediaToGroup();
-				ul.setStatusUpdate();
-				ul.blockUser();
-				ul.captureSmsCountBeforeUpgrade(appVersions[index]);
-				ul.toggleNotificationCheckbox();
-				ul.toggleAutoDownloadCheckbox(appVersions[index]);
-				ul.togglePrivacyCheckbox();
-				ul.addHikeContactAsFavorite(appVersions[index]);
-//				//ul.stickerEnableDisable();
-				ul.downloadStickerCategory();
-				ul.backUpAccount(appVersions[index]);
-				ul.resetUserAccount();
-				ul.putAppInBackground();
-				ul.updateAppVersion();
-				//AFTER UPGRADE
-				UpdateLibrary new_ver = getVersionLibrary(newAppVersion);
-				new_ver.launchHike();
-				new_ver.createNewUser(newAppVersion);
-				new_ver.restoreAccount(newAppVersion);
-				new_ver.verifyBackUpTextPersistance(newAppVersion);
-				new_ver.verifyEditedProfileAfterReset();
-				new_ver.verifyHikeMessagePersistence(newAppVersion,ul);
-				new_ver.verifySmsMessagePersistence(newAppVersion,ul);
-				new_ver.verifyGroupChatPersistence(newAppVersion,ul);
-				new_ver.verifyStatusUpdatePersistence(newAppVersion);
-				new_ver.verifyBlockedUserPersistance(newAppVersion,ul);
-				new_ver.verifySmsCountPersistence(ul);
-				new_ver.verifyAppBuildNumber(newAppVersion);
-				new_ver.verifyFavoriteListPersistence(ul);
-				new_ver.verifyAppVersionPersistenceFromServer();
-				new_ver.verifyAddedMemberToGroupPersists();
-				new_ver.verifyPinPersist(newAppVersion);
-				new_ver.verifyCreatedGroupAndMemberCountPersist();
-				new_ver.verifyShareContentPersistance(newAppVersion);
-				new_ver.verifySharedMediaPersistance(newAppVersion);
-				//ul.addDndMemberToGroup();
-				new_ver.ableToSendMessage("+911234555247");
-				new_ver.sendSticker(newAppVersion);
-				new_ver.ableToCreateGc();
-				new_ver.abletoUpdateStatus();				
-				Thread.sleep(5000);
-				new_ver.ableToAddFavorite();
-				deleteAllExistingChats();
-				new_ver.deleteUserAccount();
-				new_ver.uninstallApp();							
-			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			Assert.fail("Unable to update the version");
-		}
-	}
 	public UpdateLibrary getVersionLibrary(String version){
 		UpdateLibrary ul;
 		if (version.equals("2.7.0")){
@@ -263,7 +182,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 		else if(version.equals("3.9.0")){
 			ul=new UpdateLibrary_3_9_0();
 		}
-		else if(version.equals("3.9.0.55")){
+		else if(version.equals(getSetUpgradeNewVersion())){
 			ul=new UpdateLibrary_3_9_0_74();
 		}
 		else{

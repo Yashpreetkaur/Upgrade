@@ -241,7 +241,8 @@ public class UpdateLibrary_3_8_6 extends UpdateLibrary{
 				//				if(isElementPresentOnScreen(nux)){
 				//					clickOnElement(Locators.NAME, "SKIP");
 				//				}
-			}	
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
