@@ -806,7 +806,7 @@ public class UpdateLibrary extends HikeLibrary{
 			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
 			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
 
-			if(new_version.equals("3.9.0.74")){
+			if(new_version.equals(getSetUpgradeNewVersion())){
 
 				if(old_version.equals("3.7.0") || old_version.equals("3.6.6") || old_version.equals("3.6.0") || old_version.equals("3.5.1"))
 				{

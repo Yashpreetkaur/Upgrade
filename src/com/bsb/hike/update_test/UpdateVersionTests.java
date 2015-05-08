@@ -51,7 +51,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 					privacyCheckboxStatus.clear();
 					stickerCheckboxStatus.clear();
 					blockUserCheckboxStatus.clear();
-					//BEFORE UPGRADE
+//					//BEFORE UPGRADE
 					ul=getVersionLibrary(appVersions[index]);
 					ul.installOldVersionApp(appVersions[index]);
 					ul.createNewUser(appVersions[index]);
@@ -77,7 +77,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 					ul.downloadStickerCategory();
 					ul.putAppInBackground();
 					ul.updateAppVersion();
-//					//AFTER UPGRADE
+////					//AFTER UPGRADE
 					UpdateLibrary new_ver = getVersionLibrary(newAppVersion);
 					new_ver.launchHike();
 					new_ver.verifyDataPersistence(appVersions[index], newAppVersion,ul);
@@ -100,7 +100,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 		}
 
 
-	public void xtestVersionUpgradeCheckpoints1() throws UiObjectNotFoundException, InterruptedException {
+	public void testVersionUpgradeCheckpoints1() throws UiObjectNotFoundException, InterruptedException {
 		try{
 			System.out.println("RESET ACCOUNT UPGRADE TEST"+ appVersions[0]);
 			for(int index=0 ; index < appVersions.length ; index++){//appVersions.length
