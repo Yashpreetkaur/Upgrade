@@ -31,7 +31,7 @@ import com.bsb.hike.library.UpdateLibrary_3_8_7;
 import com.bsb.hike.library.UpdateLibrary_3_8_8;
 import com.bsb.hike.library.UpdateLibrary_3_8_9;
 import com.bsb.hike.library.UpdateLibrary_3_9_0;
-import com.bsb.hike.library.UpdateLibrary_3_9_0_74;
+import com.bsb.hike.library.UpdateLibrary_3_9_2_53;
 
 public class UpdateResetTests extends UpdateLibrary {
 
@@ -203,7 +203,7 @@ public class UpdateResetTests extends UpdateLibrary {
 			ul=new UpdateLibrary_3_9_0();
 		}
 		else if(version.equals(getSetUpgradeNewVersion())){
-			ul=new UpdateLibrary_3_9_0_74();
+			ul=new UpdateLibrary_3_9_2_53();
 		}
 		else{
 			ul=new UpdateLibrary();
