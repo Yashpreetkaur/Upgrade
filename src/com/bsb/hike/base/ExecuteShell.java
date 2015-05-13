@@ -8,41 +8,41 @@ import java.io.InputStreamReader;
 
 public class ExecuteShell {
 
-	
-	public void ExecuteShellCommand(String ... parameters){
-		
+
+	public String ExecuteShellCommand(String ... parameters){
+
 		String command= "";
-		
+
 		for(int counter=0; counter < parameters.length ; counter++){
 			command = command + parameters[counter] + " ";
 		}
 		System.out.println("COMMAND "+ command);
-		executeCommand(command);
-		
+		return executeCommand(command);
 	}
 
-	private void executeCommand(String command) {
-		 
+	private String executeCommand(String command) {
+System.out.println("private");
 		StringBuffer output = new StringBuffer();
 		Process p;
 		try {
 			p = Runtime.getRuntime().exec(command);
 			System.out.println("Testing");
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+			BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));		
 			String line = "";			
-			while ((line = input.readLine())!= null) {
+			while ((line = error.readLine())!= null) {
 				output.append(line + "\n");
-			}
+			}		
 		} catch (Exception e) {
 			System.out.println("Unable to Execute Command "+ command);
 			e.printStackTrace();
 		}
- 
-        
+		return output.toString();     
 	}
+	
 	public String executeCommands(String command) {
-		 
+		System.out.println("public");
+
 		StringBuffer output = new StringBuffer();
 		Process p;
 		try {

@@ -31,12 +31,13 @@ import com.bsb.hike.library.UpdateLibrary_3_8_7;
 import com.bsb.hike.library.UpdateLibrary_3_8_8;
 import com.bsb.hike.library.UpdateLibrary_3_8_9;
 import com.bsb.hike.library.UpdateLibrary_3_9_0;
-import com.bsb.hike.library.UpdateLibrary_3_9_2_53;
+import com.bsb.hike.library.UpdateLibrary_3_9_2_55;
 
 public class UpdateResetTests extends UpdateLibrary {
 
 
 	UpdateLibrary ul;
+	UpdateLibrary new_ver;
 
 	public void testVersionUpgradeCheckpoints() throws UiObjectNotFoundException, InterruptedException {
 		try{
@@ -52,8 +53,9 @@ public class UpdateResetTests extends UpdateLibrary {
 				privacyCheckboxStatus.clear();
 				stickerCheckboxStatus.clear();
 				blockUserCheckboxStatus.clear();
-				//BEFORE UPGRADE
+//				//BEFORE UPGRADE
 				ul=getVersionLibrary(appVersions[index]);
+				System.out.println(ul);
 				ul.installOldVersionApp(appVersions[index]);
 				ul.createNewUser(appVersions[index]);
 				setSMSCredit(15);
@@ -81,7 +83,8 @@ public class UpdateResetTests extends UpdateLibrary {
 				ul.putAppInBackground();
 				ul.updateAppVersion();
 				//AFTER UPGRADE
-				UpdateLibrary new_ver = getVersionLibrary(newAppVersion);
+			 new_ver = getVersionLibrary(newAppVersion);
+				System.out.println(new_ver);
 				new_ver.launchHike();
 				new_ver.createNewUser(newAppVersion);
 				new_ver.restoreAccount(newAppVersion);
@@ -202,8 +205,8 @@ public class UpdateResetTests extends UpdateLibrary {
 		else if(version.equals("3.9.0")){
 			ul=new UpdateLibrary_3_9_0();
 		}
-		else if(version.equals(getSetUpgradeNewVersion())){
-			ul=new UpdateLibrary_3_9_2_53();
+		else if(version.equals(newAppVersion)){
+			ul=new UpdateLibrary_3_9_2_55();
 		}
 		else{
 			ul=new UpdateLibrary();

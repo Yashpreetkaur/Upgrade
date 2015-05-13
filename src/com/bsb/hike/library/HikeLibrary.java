@@ -235,6 +235,8 @@ public class HikeLibrary extends UiAutomatorLibrary{
 
 	public void launchHike(){
 		//testing
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Launch hike");
 		System.out.println("Launching Hike55555555");
 		String runComponent = PACKAGE_NAME+'/'+START_ACTIVITY_NAME;
 		executeShellCommand.ExecuteShellCommand("am","start","-n",runComponent);
@@ -448,7 +450,9 @@ public class HikeLibrary extends UiAutomatorLibrary{
 	 * 
 	 **************************************************************************************************************************************************************/
 	public void deleteAllExistingChats() throws UiObjectNotFoundException {
-
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"Delete all created chat");
+		
 		System.out.println("deleting all conversations");
 		goToHome();
 		if(!(isElementPresentOnScreen(Locators.NAME, HomeScreen.TAP_NEW_MESSAGE_ICON_LBL))){

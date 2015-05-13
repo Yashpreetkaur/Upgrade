@@ -140,6 +140,7 @@ public class UpdateLibrary extends HikeLibrary{
 			newVersion = prop.getProperty("newAppVersion");
 			System.out.println(newVersion);
 			newAppVersion=newVersion;
+			System.out.println("new app version is ....."+newAppVersion);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -148,6 +149,7 @@ public class UpdateLibrary extends HikeLibrary{
 
 	public void installOldVersionApp(String baseVersion){
 		try {
+			System.out.println("INSTRUMENTATION DESCRIPTION: -Install old version:");	
 			System.out.println("  INSTALLING OLD VERSION");
 			ExecuteShell exec = new ExecuteShell();
 			System.out.println(baseVersion);
@@ -161,7 +163,9 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
-
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+							+"1.Sign up."+"\n"+
+							"2.Check to ensure signup.");
 		try {
 			System.out.println("CREATING NEW USER");
 			//setting pin for current user
@@ -224,6 +228,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void updateProfile(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Update user name from edit profile screen."+"\n"+
+				"2.Check updated name in profile screen");
 		try {
 			System.out.println("UPDATING PROFILE");
 			openOverflowMenu();
@@ -269,6 +276,11 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void sendHikeMessage(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Start a new chat with hike user."+"\n"+
+				"2.Send a message."+"\n"+
+				"3.Receive a message on same chat thread."+"\n"+
+				"4.Check that messages has been successfully sent and received");
 		try {
 			System.out.println("SENDING HIKE MESSAGE");
 			List<String> listOfMessages = new ArrayList<String>();
@@ -311,6 +323,10 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void sendHike2SmsMessage(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Start a new chat with SMS user."+"\n"+
+				"2.Send a message."+"\n"+
+				"3.Check that message has been successfully sent.");
 		try {
 			System.out.println("SENDING MESSAGE TO SMS USER");
 			List<String> listOfMessages = new ArrayList<String>();
@@ -328,6 +344,11 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void createGcAndSendMessage(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Create a new group and add user to it."+"\n"+
+				"2.Receive a message by group owner in group." +
+				"\n"+"3.Send a new message in group."+
+				"\n"+"4.Check that messages has been successfully sent and received");
 		try {
 			System.out.println("CREATING GROUP AND SENDING MESSAGE");
 			GroupChatMessageSupport gc = new GroupChatMessageSupport();
@@ -356,6 +377,9 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void setStatusUpdate() throws UiObjectNotFoundException, InterruptedException {
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Set a status update."+"\n"+
+				"2.Check status in profile and timeline");
 		try {
 			System.out.println("SETTING STATUS UPDATE");
 
@@ -384,6 +408,8 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void captureSmsCountBeforeUpgrade(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Capture the SMS count from SMS screen or Settings screen depending on the version.");
 		try {
 			System.out.println("CAPTURING SMS COUNT BEFORE UPGRADE");
 
@@ -449,6 +475,9 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void toggleNotificationCheckbox(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Change notification settings."+"\n"+
+				"2.Note the status of all elements.");
 		try {
 			System.out.println("CHANGING NOTIFICATION SETTINGS");
 
@@ -472,6 +501,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void toggleAutoDownloadCheckbox(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Change auto download settings from auto download tab."+"\n"+
+				"2.Note the status of all elements.");
 		try {
 			System.out.println("CHANGING AUTO DOWNLOAD SETTINGS .. update lib ");
 
@@ -497,6 +529,9 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 	public void addHikeContactAsFavorite(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Add Hike contact as favorite."+"\n"+
+				"2.Check favorite status from chat screen and timeline.");
 		try {
 			System.out.println("ADDING FAVORITE");
 
@@ -514,6 +549,8 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void putAppInBackground(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Put app in background");
 		try {
 			System.out.println("PUTTING APP IN BACKGROUND");
 
@@ -524,11 +561,14 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void updateAppVersion(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Update app version");
 		try {
 			System.out.println("UPDATING APP VERSION");
 
 			ExecuteShell exec = new ExecuteShell();
-			exec.ExecuteShellCommand("pm", "install" , " -r", " /data/local/tmp/android-client-" + newAppVersion + ".apk");
+			String output =exec.ExecuteShellCommand("pm", "install" , " -r", " /data/local/tmp/android-client-" + newAppVersion + ".apk");
+			Assert.assertFalse("Failed to upgrade build", output.contains("Failure"));
 			Thread.sleep(5000);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -537,6 +577,7 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyDataPersistence(String version, String newVersion, UpdateLibrary ul){
+		
 		try {
 			System.out.println("VERIFYING DATA PERSISTENCE");
 			verifyEditedProfile();
@@ -566,6 +607,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyEditedProfile(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Check profile screen."+"\n"+
+				"2.Updated name should be visible.");
 		try {
 			System.out.println("VERIFYING UPDATED PROFILE");
 			super.openOverflowMenu();
@@ -602,6 +646,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyHikeMessagePersistence(String old_version,UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Check chat with hike contact."+"\n"+
+				"2.All messages should be present in chat thread.");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping hike message persistance test as old verison does not support backup");
@@ -633,6 +680,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifySmsMessagePersistence(String old_version,UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Check chat with SMS contact."+"\n"+
+				"2.All messages should be present in chat thread.");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping sms message persistance test as old version does not support backup");
@@ -660,7 +710,11 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyGroupChatPersistence(String old_version,UpdateLibrary ul){
-		try {
+		
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Check group chat screen."+"\n"+
+				"2.All messages should be present in chat thread.");
+try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping group chat persistance as old version does not support backup");
 			} else {
@@ -687,6 +741,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyStatusUpdatePersistence(String old_version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Check the status update."+"\n"+
+				"2.It should persist after upgrade.");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping status update peristance test");
@@ -706,6 +763,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyAppBuildNumber(String new_version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify build number from settings screen.");
 		try {
 			System.out.println("VERIFYING app build number");
 			String buildNumber = "Version " + new_version;
@@ -723,6 +782,8 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void verifyAppVersionPersistenceFromServer(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify application version from server");
 		try {
 			System.out.println("VERIFYING APP VERSION  PERSISTENCE");
 			DBCollection collection = userDB.getCollection(HikeConstants.MONGO_USERS_COLLECTION);
@@ -775,6 +836,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifySmsCountPersistence(UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Check SMS count from Settings screen."+"\n"+
+				"2.It should be same as before.");
 		try {
 			System.out.println("VERIFYING SMS COUNT PERSISTENCE");
 			super.goToHome();
@@ -796,6 +860,9 @@ public class UpdateLibrary extends HikeLibrary{
 
 
 	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version,UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Auto Download settings should be same after upgrade."+"\n"+
+				"2.Default settings should be applicable to new options.");
 		try {
 			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE");
 			super.goToHome();
@@ -806,7 +873,7 @@ public class UpdateLibrary extends HikeLibrary{
 			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
 			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
 
-			if(new_version.equals(getSetUpgradeNewVersion())){
+			if(new_version.equals(newAppVersion)){
 
 				if(old_version.equals("3.7.0") || old_version.equals("3.6.6") || old_version.equals("3.6.0") || old_version.equals("3.5.1"))
 				{
@@ -866,6 +933,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyNotificationsCheckboxPersistence(String old_version, UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Notification settings should be same after upgrade."+"\n"+
+				"2.Default settings should be applicable to new options.");
 		try {
 			System.out.println("VERIFYING NOTIFICATION SETTING PERSISTENCE");
 			super.goToHome();
@@ -1055,6 +1125,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyFavoriteListPersistence(UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Favorite added before upgrade should be present.");
 		try {
 			System.out.println("VERIFYING FAVORITE LIST PERSISTENCE");
 			super.goToHome();
@@ -1073,6 +1145,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void deleteUserAccount(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"Delete Account");
+		
 		try{
 			System.out.println("deleting account");
 			super.goToHome();
@@ -1089,6 +1164,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void uninstallApp(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"2.Uninstall app.");
+		
 		try {
 			System.out.println("UNINSTALLING APP");
 			ExecuteShell exec = new ExecuteShell();
@@ -1101,6 +1179,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void ableToSendMessage(String msisdn) throws UiObjectNotFoundException, InterruptedException {
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Create new chat and send message after upgrade");
 		try {
 			System.out.println("SENDING MESSAGE");
 			String message = "message after upgrade..";
@@ -1130,6 +1210,10 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void ableToCreateGc() throws UiObjectNotFoundException, InterruptedException{
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Create group"+"\n"+
+				"2.send message to it.");
+		
 		System.out.println("CREATING GC");
 		super.goToHome();
 		String groupName = "Automation group "+ RandomStringUtils.randomNumeric(4);
@@ -1163,6 +1247,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void abletoUpdateStatus() throws UiObjectNotFoundException, InterruptedException {
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Post a new status after upgrade");
 		try {
 			System.out.println("UPDATING STATUS");
 			super.goToHome();
@@ -1179,6 +1265,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void ableToAddFavorite(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Add a new favorite after upgrade");
+		
 		try {
 			System.out.println("ADDING FAVORITE");
 			super.goToHome();
@@ -1227,6 +1316,10 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void sendSticker(String old_version) throws UiObjectNotFoundException, InterruptedException{
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Open chat thead."+"\n"+
+				"2.Click on sticker icon."+
+				"3.Popup to download should not appear.");
 		if (old_version.equals("3.5.1")) {
 			goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
@@ -1257,6 +1350,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void downloadStickerCategory() throws UiObjectNotFoundException, InterruptedException{
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Download sticker from sticker palatte.");
 		try {
 			System.out.println("Download sticker category from sticker shop");
 			goToHome();
@@ -1283,6 +1378,8 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 	public void verifyStickerDownloadedStatus(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify downloaded sticker persist after upgrade.");
 		try {
 
 			goToHome();
@@ -1372,6 +1469,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void addMemberToGroup(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Add member to the created group.");
 		try {
 			clickOnElement(Locators.NAME, groupName);
 			clickOnElement(Locators.NAME, groupName);
@@ -1389,6 +1488,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyAddedMemberToGroupPersists(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify added member persist in the group.");
 		try {
 			System.out.println("Verifying added member peristance after upgrade");
 			goToHome();
@@ -1405,6 +1506,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void addPin(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Add pin in the group.");
 		try {
 			goToHome();
 			clickOnElement(Locators.NAME, groupName);
@@ -1418,6 +1521,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyPinPersist(String old_version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify added pin persist in the group.");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping pin persitance test as old version does not support backup");
@@ -1462,6 +1567,9 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 	public void createGCandUpdateName() throws UiObjectNotFoundException, InterruptedException{
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Create group and update name."+"\n"+
+				"2.Verify that group name change mqtt packet appears.");
 		try {
 			goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.OVERFLOW_ICON);
@@ -1488,6 +1596,8 @@ public class UpdateLibrary extends HikeLibrary{
 		}
 	}
 	public void verifyCreatedGroupAndMemberCountPersist(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify created group and its added members count");
 		try {
 			System.out.println("Verifying group peristance after upgrade");
 			goToHome();
@@ -1500,6 +1610,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void shareContentToGroup(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Share file in the group."+"\n"+
+				"2. verify file gets shared and visible under group info.");
 		try {
 			System.out.println("Sharing content to the group");
 			goToHome();
@@ -1519,6 +1632,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyShareContentPersistance(String old_version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify shared content persist in the group.");
 		try {
 
 			if (old_version.equals("3.5.1")) {
@@ -1547,6 +1662,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void shareMediaToGroup(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Share media in the group and verify shared media appears under group info.");
 		try {
 			System.out.println("Sharing media to the group");
 			goToHome();
@@ -1566,6 +1683,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifySharedMediaPersistance(String old_version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify shared media persist in the group.");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping pin persitance test as old version does not support backup");
@@ -1590,6 +1709,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void blockUser(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Block user from privacy settings."+"\n"+
+				"2. Verify user appears as block from chat thread.");
 		try {
 			System.out.println("Block user from settings");
 			goToHome();
@@ -1615,6 +1737,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyBlockedUserPersistance(String old_version,UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Verify blocked user persist after upgrade.");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Verifying blocked user peristance after upgrade from settings");
@@ -1663,6 +1787,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void togglePrivacyCheckbox(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Change last seen settings from privacy screen."+"\n"+
+				"2.Note the status of all elements.");
 		try {
 			System.out.println("CHANGING PRIVACY SETTINGS");
 			goToHome();
@@ -1695,6 +1822,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyPrivacyCheckboxPersistence(UpdateLibrary ul){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Last seen settings should be same after upgrade."+"\n"+
+				"2.Default settings should be applicable to new options.");
 		try {
 			System.out.println("VERIFYING PRIVACY SETTING PERSISTENCE");
 			super.goToHome();
@@ -1748,6 +1878,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}	 
 
 	public void resetUserAccount(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Reset user account");
 		try{
 			System.out.println("Resetting Account");
 			super.goToHome();
@@ -1761,6 +1893,10 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void backUpAccount(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Go to account settings "+"\n"+
+				"2.Take user account backup");
+		
 		try {
 			if (version.equals("3.5.1")) {
 				System.out.println("Skipping backup as version does not have backup functionality");
@@ -1795,6 +1931,9 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyBackUpTextPersistance(String old_version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Go to account settings "+"\n"+
+				"2.Verify backup text");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping backup persistance test as old version does not support backup");
@@ -1819,6 +1958,8 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void restoreAccount(String old_version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Restore user account backup while re-signup");
 		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping restore account as old version does not support backup");
