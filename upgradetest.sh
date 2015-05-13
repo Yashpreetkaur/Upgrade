@@ -1,3 +1,4 @@
+ant clean
 ant build
 android create uitest-project -n src -t 12 -p .
 adb push ./bin/src.jar /data/local/tmp/
