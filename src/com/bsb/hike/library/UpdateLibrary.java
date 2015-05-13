@@ -567,8 +567,7 @@ public class UpdateLibrary extends HikeLibrary{
 			System.out.println("UPDATING APP VERSION");
 
 			ExecuteShell exec = new ExecuteShell();
-			String output =exec.ExecuteShellCommand("pm", "install" , " -r", " /data/local/tmp/android-client-" + newAppVersion + ".apk");
-			Assert.assertFalse("Failed to upgrade build", output.contains("Failure"));
+			exec.ExecuteShellCommand("pm", "install" , " -r", " /data/local/tmp/android-client-" + newAppVersion + ".apk");
 			Thread.sleep(5000);
 		} catch (Exception e) {
 			e.printStackTrace();

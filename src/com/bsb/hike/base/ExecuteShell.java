@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 public class ExecuteShell {
 
 
-	public String ExecuteShellCommand(String ... parameters){
+	public void ExecuteShellCommand(String ... parameters){
 
 		String command= "";
 
@@ -17,7 +17,7 @@ public class ExecuteShell {
 			command = command + parameters[counter] + " ";
 		}
 		System.out.println("COMMAND "+ command);
-		return executeCommand(command);
+		executeCommand(command);
 	}
 
 	private String executeCommand(String command) {
