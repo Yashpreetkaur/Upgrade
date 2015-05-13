@@ -2,7 +2,7 @@ ant build
 android create uitest-project -n src -t 12 -p .
 adb push ./bin/src.jar /data/local/tmp/
 adb push ./local.properties /data/local/tmp/
-adb push ./builds.properties /data/local/tmp/
+adb push /Users/yashpreet/Documents/builds.properties /data/local/tmp/
 
 #adb push /Users/yashpreet/Documents/builds/android-client-2.7.0.apk /data/local/tmp/
 #adb push /Users/yashpreet/Documents/builds/android-client-2.7.1.apk /data/local/tmp/

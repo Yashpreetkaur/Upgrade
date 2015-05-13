@@ -34,9 +34,9 @@ import com.bsb.hike.objectlocator.WelcomeScreen;
 import com.bsb.hike.popup.screen.ConfirmYourNumberPopUpScreen;
 import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 
-public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
+public class UpdateLibrary_3_9_2 extends UpdateLibrary{
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
-		System.out.println("CREATING NEW USER...3.9.2.55");
+		System.out.println("CREATING NEW USER...3.9.2");
 
 		try {
 			//setting pin for current user
@@ -85,10 +85,8 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 	}
 	public void updateProfile(){
 		try {
-			System.out.println("UPDATING PROFILE...3.9.2.55");
+			System.out.println("UPDATING PROFILE...3.9.2");
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 			enterText(HIKE_NUMBER_1);
 			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
 			goToHome();
@@ -131,11 +129,9 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 	}
 
 	public void startSingleChatAndSendMessageToUnsavedNumber(String msisdn , String message  ) throws UiObjectNotFoundException, InterruptedException{
-		System.out.println("STARTING CHAT WITH UNSAVED USER...3.9.2.55");
+		System.out.println("STARTING CHAT WITH UNSAVED USER...3.9.2");
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 		enterText(msisdn);
 		clickOnElement(Locators.NAME, "Tap to start chat");
 		//	    	clickOnElement(Locators.NAME,"1");
@@ -144,12 +140,10 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 	}
 
 	public void startSingleChatAndSendMessageToHikeUser(String name , String message  ) throws UiObjectNotFoundException, InterruptedException{
-		System.out.println("STARTING CHAT WITH HIKE USER...3.9.2.55");
+		System.out.println("STARTING CHAT WITH HIKE USER...3.9.2");
 
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 		//		enterText(msisdn);
 		clickOnElement(Locators.NAME, name);
 		//	    	clickOnElement(Locators.NAME,"1");
@@ -158,7 +152,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 	}
 
 	public void sendMessage() throws UiObjectNotFoundException{
-		System.out.println("Sending Message...3.9.2.55");
+		System.out.println("Sending Message...3.9.2");
 		int sendButtonIndex=2;
 
 		UiObject FrameLayout = getElement(Locators.CLASSNAME, AndroidClassNames.FRAME_LAYOUT, 0);
@@ -185,7 +179,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 
 	public void sendHikeMessage(String version){
 		try {
-			System.out.println("SENDING HIKE MESSAGE...3.9.2.55");
+			System.out.println("SENDING HIKE MESSAGE...3.9.2");
 			//			setSMSCredit(100);
 			//			setDEFAULT_MSISDN();
 			List<String> listOfMessages = new ArrayList<String>();
@@ -216,7 +210,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 
 	public void sendHike2SmsMessage(String version){
 		try {
-			System.out.println("SENDING MESSAGE TO SMS USER...3.9.2.55");
+			System.out.println("SENDING MESSAGE TO SMS USER...3.9.2");
 
 			List<String> listOfMessages = new ArrayList<String>();
 			goToHome();
@@ -236,10 +230,9 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 	public void goToHome(){
 		try {
 			int counter =0;
-			System.out.println("GOING BACK TO HOME SCREEN...3.9.2.55");
+			System.out.println("GOING BACK TO HOME SCREEN...3.9.2");
 
 			UiObject startChat = getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			
 			while(!startChat.exists() && counter <5){
 				UiDevice.getInstance().pressBack();
 				startChat= getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
@@ -256,7 +249,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 
 	public void captureSmsCountBeforeUpgrade(String version){
 		try {
-			System.out.println("CAPTURING SMS COUNT BEFORE UPGRADE...3.9.2.55");
+			System.out.println("CAPTURING SMS COUNT BEFORE UPGRADE...3.9.2");
 
 			goToHome();
 			openOverflowMenu();
@@ -267,6 +260,10 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 			int smsTextLen = smsElement.getText().length();
 			smsCountOnUiBeforeUpgrade = smsElement.getText().substring(smsTextLen-3, smsTextLen-1).trim();
 			System.out.println(smsCountOnUiBeforeUpgrade);
+
+
+			//			smsCountFromRedisBeforeUpgrade = captureSmsCountFromServerBeforeUpgrade();
+			//			System.out.println(smsCountFromRedisBeforeUpgrade);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Unable to capture sms count before upgrade");
@@ -275,7 +272,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 
 	public void openOverflowMenu(){
 		try {
-			System.out.println("Opening Overflow Menu...3.9.2.55");
+			System.out.println("Opening Overflow Menu...3.9.2");
 			clickOnElement(Locators.CONTENT_DESCRIPTION,HomeScreen.OVERFLOW_ICON);
 		} catch (UiObjectNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -288,7 +285,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 
 	public void toggleAutoDownloadCheckbox(String version){
 		try {
-			System.out.println("CHANGING AUTO DOWNLOAD SETTINGS...3.9.2.55");
+			System.out.println("CHANGING AUTO DOWNLOAD SETTINGS...3.9.2 ");
 
 			goToHome();
 			openOverflowMenu();
@@ -326,7 +323,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 			UiObject audioWifi = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(6));
 			audioWifi.click();
 			autoDownloadCheckboxStatus.put(6, audioWifi.isChecked());
-
+			
 			Iterator iterator = autoDownloadCheckboxStatus.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
@@ -340,7 +337,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 
 	public void addHikeContactAsFavorite(String version){
 		try {
-			System.out.println("ADDING AS FAVORITE...3.9.2.55");
+			System.out.println("ADDING AS FAVORITE...3.9.2");
 			exitHike();
 			launchHikeWithoutWaitingForPopup();
 			goToHome();
@@ -360,8 +357,6 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 			clickOnElement(Locators.NAME, FavoriteScreen.FAV_TITLE_LBL);
 			clickOnElement(Locators.NAME, TimelineScreen.TIMELINE_TITLE_LBL);
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 			Assert.assertTrue("Unable to add favorite",isElementPresentOnScreen(Locators.NAME, "FAVORITES"));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -370,7 +365,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 
 	public void setStatusUpdate() throws UiObjectNotFoundException, InterruptedException {
 		try {
-			System.out.println("SETTING STATUS UPDATE...3.9.2.55");
+			System.out.println("SETTING STATUS UPDATE...3.9.2");
 			goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.OVERFLOW_ICON);
 			clickOnElement(Locators.NAME,"Timeline");
@@ -402,7 +397,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 	}
 	public void toggleNotificationCheckbox(){
 		try {
-			System.out.println("CHANGING NOTIFICATION SETTINGS...3.9.2.55");
+			System.out.println("CHANGING NOTIFICATION SETTINGS...3.9.2");
 			goToHome();
 			openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -434,10 +429,10 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 			e.printStackTrace();
 		}
 	}
-
-	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version,UpdateLibrary ul){
+	
+	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version){
 		try {
-			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE...3.9.2.55");
+			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE...3.9.2");
 			super.goToHome();
 			super.openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -452,7 +447,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 					for(int i=1 ; i<7 ; i++){	
 						System.out.println(i);
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
-						boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i-1);
+						boolean wasChecked = autoDownloadCheckboxStatus.get(i-1);
 						System.out.println(wasChecked);
 						boolean isChecked = object.isChecked();	
 						System.out.println(isChecked);
@@ -463,7 +458,7 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 					for(int i=0 ; i<7 ; i++){	
 						System.out.println(i);
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
-						boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i);
+						boolean wasChecked = autoDownloadCheckboxStatus.get(i);
 						System.out.println(wasChecked);
 						boolean isChecked = object.isChecked();	
 						System.out.println(isChecked);
@@ -485,13 +480,13 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 						}
 					}
 					else {
-//						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
-//						boolean wasChecked = autoDownloadCheckboxStatus.get(i);
-//						boolean isChecked = object.isChecked();
-//						Assert.assertTrue(wasChecked==isChecked);
-						
+						//						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
+						//						boolean wasChecked = autoDownloadCheckboxStatus.get(i);
+						//						boolean isChecked = object.isChecked();
+						//						Assert.assertTrue(wasChecked==isChecked);
+
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
-						boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i-1);
+						boolean wasChecked = autoDownloadCheckboxStatus.get(i-1);
 						System.out.println(wasChecked);
 						boolean isChecked = object.isChecked();	
 						System.out.println(isChecked);
@@ -503,4 +498,6 @@ public class UpdateLibrary_3_9_2_55 extends UpdateLibrary{
 			e.printStackTrace();
 		}
 	}
+	
+
 }
