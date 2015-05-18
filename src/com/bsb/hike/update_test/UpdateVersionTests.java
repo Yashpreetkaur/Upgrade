@@ -32,7 +32,7 @@ import com.bsb.hike.library.UpdateLibrary_3_8_8;
 import com.bsb.hike.library.UpdateLibrary_3_8_9;
 import com.bsb.hike.library.UpdateLibrary_3_9_0;
 import com.bsb.hike.library.UpdateLibrary_3_9_2;
-import com.bsb.hike.library.UpdateLibrary_3_9_2_56;
+import com.bsb.hike.library.UpdateLibrary_3_9_2_57;
 
 public class UpdateVersionTests extends UpdateLibrary {
 
@@ -187,7 +187,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 			ul=new UpdateLibrary_3_9_2();
 		}
 		else if(version.equals(newAppVersion)){
-			ul=new UpdateLibrary_3_9_2_56();
+			ul=new UpdateLibrary_3_9_2_57();
 		}
 		else{
 			ul=new UpdateLibrary();
