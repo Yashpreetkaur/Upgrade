@@ -34,7 +34,7 @@ import com.bsb.hike.objectlocator.WelcomeScreen;
 import com.bsb.hike.popup.screen.ConfirmYourNumberPopUpScreen;
 import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 
-public class UpdateLibrary_3_9_6_36 extends UpdateLibrary{
+public class UpdateLibrary_3_9_6_37 extends UpdateLibrary{
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
 		System.out.println("CREATING NEW USER... "+newAppVersion);
 
