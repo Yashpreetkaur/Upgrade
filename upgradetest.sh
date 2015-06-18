@@ -31,17 +31,27 @@ adb push ./local.properties /data/local/tmp/
 
 #adb push /Users/yashpreet/Documents/builds/android-client-3.8.6.apk /data/local/tmp/
 #adb push /Users/yashpreet/Documents/builds/android-client-3.8.7.apk /data/local/tmp/
+<<<<<<< HEAD
 #adb push /Users/yashpreet/Documents/builds/android-client-3.8.8.apk /data/local/tmp/
+=======
+adb push /Users/yashpreet/Documents/builds/android-client-3.8.8.apk /data/local/tmp/
+>>>>>>> 4cf04abc905d31c520970f3e0a3265dcd91e6ce9
 adb push /Users/yashpreet/Documents/builds/android-client-3.8.9.apk /data/local/tmp/
 adb push /Users/yashpreet/Documents/builds/android-client-3.9.0.apk /data/local/tmp/
 adb push /Users/yashpreet/Documents/builds/android-client-3.9.2.apk /data/local/tmp/
 adb push /Users/yashpreet/Documents/builds/android-client-3.9.6.apk /data/local/tmp/
+<<<<<<< HEAD
 adb push /Users/yashpreet/Documents/builds/android-client-3.9.7.apk /data/local/tmp/
 
 
 #adb push /Users/yashpreet/.jenkins/jobs/internal/workspace/build/outputs/apk/android-client-3.9.2.58.apk /data/local/tmp/
 
 adb push /Users/yashpreet/Documents/builds/new/android-client-3.9.7.49.3.apk /data/local/tmp/
+=======
+
+
+adb push /Users/yashpreet/.jenkins/jobs/internal/workspace/build/outputs/apk/android-client-3.9.6.37.apk /data/local/tmp/
+>>>>>>> 4cf04abc905d31c520970f3e0a3265dcd91e6ce9
 
 adb shell uiautomator runtest src.jar -c com.bsb.hike.update_test.UpdateVersionTests
 #adb shell uiautomator runtest src.jar -c com.bsb.hike.update_test.UpdateResetTests

@@ -36,6 +36,7 @@ import com.bsb.hike.library.UpdateLibrary_3_9_6;
 import com.bsb.hike.library.UpdateLibrary_3_9_7;
 import com.bsb.hike.library.UpdateLibrary_3_9_7_49_3;
 
+
 public class UpdateVersionTests extends UpdateLibrary {
 
 
@@ -196,6 +197,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 		}
 		else if(version.equals(newAppVersion)){
 			ul=new UpdateLibrary_3_9_7_49_3();
+
 		}
 		else{
 			ul=new UpdateLibrary();
