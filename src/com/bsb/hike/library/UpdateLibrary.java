@@ -91,8 +91,8 @@ public class UpdateLibrary extends HikeLibrary{
 	public RedisServiceManagerUtil redis = RedisServiceManagerUtil.getInstance();
 	public MongoDBManagerUtil mongo = MongoDBManagerUtil.getInstance();
 	public  DB userDB = mongo.getMongo().getDB("userdb");
-	public static String[] appVersions=getSetUpgradeOldVersion();	////, "2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
-	public static String newAppVersion=getSetUpgradeNewVersion();
+	public static String[] appVersions={"3.9.7"};	//// "3.9.6","3.9.2","3.9.6","3.9.2","3.9.0",,,"3.9.6", "3.9.2",,"3.9.2","3.9.0""3.9.2","2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
+	public static String newAppVersion="3.9.7.49.3";
 	public HashMap<String, List<String>> hikeMsgHm =new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsgSm=new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsGrp=new HashMap<String, List<String>>(); ;
@@ -164,8 +164,8 @@ public class UpdateLibrary extends HikeLibrary{
 
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
-							+"1.Sign up."+"\n"+
-							"2.Check to ensure signup.");
+				+"1.Sign up."+"\n"+
+				"2.Check to ensure signup.");
 		try {
 			System.out.println("CREATING NEW USER");
 			//setting pin for current user
@@ -576,7 +576,7 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyDataPersistence(String version, String newVersion, UpdateLibrary ul){
-		
+
 		try {
 			System.out.println("VERIFYING DATA PERSISTENCE");
 			verifyEditedProfile();
@@ -588,7 +588,7 @@ public class UpdateLibrary extends HikeLibrary{
 			verifyAppBuildNumber(newVersion);
 			verifyNotificationsCheckboxPersistence(newVersion,ul);
 			verifyAutoDownloadCheckboxPersistence(version, newVersion,ul);
-			verifyPrivacyCheckboxPersistence(ul);
+			verifyPrivacyCheckboxPersistence(version,ul);
 			verifyFavoriteListPersistence(ul);
 			verifyBlockedUserPersistance(newVersion,ul);
 			verifyAppVersionPersistenceFromServer();
@@ -709,11 +709,11 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 	public void verifyGroupChatPersistence(String old_version,UpdateLibrary ul){
-		
+
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Check group chat screen."+"\n"+
 				"2.All messages should be present in chat thread.");
-try {
+		try {
 			if (old_version.equals("3.5.1")) {
 				System.out.println("Skipping group chat persistance as old version does not support backup");
 			} else {
@@ -1130,7 +1130,7 @@ try {
 			System.out.println("VERIFYING FAVORITE LIST PERSISTENCE");
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+//			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 
 			Assert.assertTrue("Favorite does not persist",isElementPresentOnScreen(Locators.NAME,NewChatContactSelectScreen.FAVORITE_LBL));
 			clickOnElement(Locators.NAME, ul.favorite);
@@ -1146,7 +1146,7 @@ try {
 	public void deleteUserAccount(){
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"Delete Account");
-		
+
 		try{
 			System.out.println("deleting account");
 			super.goToHome();
@@ -1165,7 +1165,7 @@ try {
 	public void uninstallApp(){
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"2.Uninstall app.");
-		
+
 		try {
 			System.out.println("UNINSTALLING APP");
 			ExecuteShell exec = new ExecuteShell();
@@ -1185,7 +1185,7 @@ try {
 			String message = "message after upgrade..";
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+//			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 
 			enterText(msisdn);
 
@@ -1197,7 +1197,7 @@ try {
 
 			super.goToHome();
 
-			Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_MOMENTS_AGO_LBL));
+			Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_NOW_AGO_LBL));
 			Assert.assertTrue("User is not able to Send message", isElementPresentOnScreen(Locators.NAME,message));
 			//    		Assert.assertTrue("User is not able to send Message", isElementPresentOnScreen(name))// need to assert for message status after getting the name
 
@@ -1212,7 +1212,7 @@ try {
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Create group"+"\n"+
 				"2.send message to it.");
-		
+
 		System.out.println("CREATING GC");
 		super.goToHome();
 		String groupName = "Automation group "+ RandomStringUtils.randomNumeric(4);
@@ -1239,7 +1239,7 @@ try {
 		if(!isElementPresentOnScreen(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL)){
 			UiDevice.getInstance().pressBack();
 		}
-		Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_MOMENTS_AGO_LBL));
+		Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_NOW_AGO_LBL));
 		Assert.assertTrue("User is not able to Send message", isElementPresentOnScreen(Locators.NAME,groupMessage));
 
 
@@ -1266,7 +1266,7 @@ try {
 	public void ableToAddFavorite(){
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Add a new favorite after upgrade");
-		
+
 		try {
 			System.out.println("ADDING FAVORITE");
 			super.goToHome();
@@ -1299,7 +1299,7 @@ try {
 
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+//			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 
 			Assert.assertTrue("not able to add favorite",isElementPresentOnScreen(Locators.NAME,NewChatContactSelectScreen.FAVORITE_LBL));
 			System.out.println("ssssssssssssssssssssssss"+fav_name);
@@ -1322,7 +1322,7 @@ try {
 		if (old_version.equals("3.5.1")) {
 			goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+//			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 
 			enterText(HIKE_NUMBER_1);
 			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
@@ -1348,7 +1348,7 @@ try {
 		}
 	}
 
-	public void downloadStickerCategory() throws UiObjectNotFoundException, InterruptedException{
+	public void downloadStickerCategory(String version) throws UiObjectNotFoundException, InterruptedException{
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Download sticker from sticker palatte.");
 		try {
@@ -1384,7 +1384,7 @@ try {
 			goToHome();
 
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+//			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 
 			clickOnElement(Locators.NAME, HIKE_CONTACT_NAME);
 			UiObject view = getElement(Locators.CLASSNAME, "android.view.View");
@@ -1594,7 +1594,7 @@ try {
 			e.printStackTrace();
 		}
 	}
-	public void verifyCreatedGroupAndMemberCountPersist(){
+	public void verifyCreatedGroupAndMemberCountPersist(){ 
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Verify created group and its added members count");
 		try {
@@ -1602,7 +1602,7 @@ try {
 			goToHome();
 			Assert.assertTrue("Created group does not persists after upgrade",isElementPresentOnScreen(Locators.NAME,Updated_Test_Group_Name));
 			clickOnElement(Locators.NAME, Updated_Test_Group_Name);
-			Assert.assertTrue("Failed to persist group members count",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.PEOPLE_LBL));
+			Assert.assertTrue("Failed to persist group members count",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.MEMBER_LBL));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1670,9 +1670,10 @@ try {
 			clickOnElement(Locators.CONTENT_DESCRIPTION, ChatThreadScreen.ATTACH_ICON);
 			clickOnElement(Locators.NAME, AttachmentListScreen.GALLERY_LBL);
 			UiDevice.getInstance().click(171, 302);
-			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.TAP_AND_HOLD_TO_SELECT_MULTIPLE_FILES));
+			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.CHOOSE_A_PHOTO));
 			UiDevice.getInstance().click(108, 267);
-			clickOnElement(Locators.NAME, PreviewScreen.SEND_BTN);
+			clickOnElement(Locators.NAME,"Next");
+//			clickOnElement(Locators.NAME, PreviewScreen.SEND_BTN);
 			clickOnElement(Locators.NAME, ChooseImageQualityScreen.SEND_BTN);
 			Assert.assertTrue("Failed to redirect to chat thread",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.PEOPLE_LBL));
 
@@ -1707,7 +1708,7 @@ try {
 		}
 	}
 
-	public void blockUser(){
+	public void blockUser(String version){
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1. Block user from privacy settings."+"\n"+
 				"2. Verify user appears as block from chat thread.");
@@ -1785,7 +1786,7 @@ try {
 		}
 	}
 
-	public void togglePrivacyCheckbox(){
+	public void togglePrivacyCheckbox(String version){
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Change last seen settings from privacy screen."+"\n"+
 				"2.Note the status of all elements.");
@@ -1820,59 +1821,119 @@ try {
 		}
 	}
 
-	public void verifyPrivacyCheckboxPersistence(UpdateLibrary ul){
+	public void verifyPrivacyCheckboxPersistence(String old_version,UpdateLibrary ul){
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Last seen settings should be same after upgrade."+"\n"+
 				"2.Default settings should be applicable to new options.");
-		try {
-			System.out.println("VERIFYING PRIVACY SETTING PERSISTENCE");
-			super.goToHome();
-			super.openOverflowMenu();
-			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
-			clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
+		if(old_version.equals("3.9.2") || old_version.equals("3.9.6")){
+	
+			try {
+				System.out.println("VERIFYING PRIVACY SETTING PERSISTENCE");
+				super.goToHome();
+				super.openOverflowMenu();
+				clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
+				clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
 
-			for(int i=0;i<5;i++){
-				System.out.println(i);
-				if(i==0){
-					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
-					boolean wasChecked = ul.privacyCheckboxStatus.get(i+1);
-					boolean isChecked = object.isChecked();
-					System.out.println(wasChecked);
-					System.out.println(isChecked);
-					Assert.assertTrue(wasChecked==isChecked);
-				}
-				else if(i==1){
-					UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
-					UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 2);				
-					UiObject lastSeenLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);
-					System.out.println(lastSeenLbl.getText());
-					Assert.assertTrue("Show to everyone is not present",lastSeenLbl.getText().contains("Show Last Seen : Nobody"));
-				}
-				else if (i==2){
-					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i-1));
-					boolean wasChecked = ul.privacyCheckboxStatus.get(i+1);
-					boolean isChecked = object.isChecked();
-					System.out.println(wasChecked);
-					System.out.println(isChecked);
-					Assert.assertTrue(wasChecked==isChecked);
-				}
-				else if (i==3){
-					boolean wasChecked = ul.privacyCheckboxStatus.get(i-3);
-					System.out.println(wasChecked);
-					Assert.assertFalse("Blocked list default setting does not persists",wasChecked);
-				}
-				else{
-					UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
-					UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 6);				
-					UiObject favouriteLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);	
-					System.out.println(favouriteLbl.getText());
-					Assert.assertTrue("Favourite privacy setting is not coming", favouriteLbl.getText().equals(PrivacyScreen.FAVOURITE_LBL));
+				for(int i=0;i<5;i++){
+					System.out.println(i);
+					if(i==0){
+						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
+						boolean wasChecked = ul.privacyCheckboxStatus.get(i);
+						boolean isChecked = object.isChecked();
+						System.out.println(wasChecked);
+						System.out.println(isChecked);
+						Assert.assertTrue(wasChecked==isChecked);
+					}
+					else if(i==1){
+						UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
+						UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 2);				
+						UiObject lastSeenLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);
+						System.out.println(lastSeenLbl.getText());
+						Assert.assertTrue("Show to my contacts is not present",lastSeenLbl.getText().contains("Show Last Seen : My Contacts"));
+					}
+					if(i==2){
+						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i-1));
+						boolean wasChecked = ul.privacyCheckboxStatus.get(i);
+						boolean isChecked = object.isChecked();
+						System.out.println(wasChecked);
+						System.out.println(isChecked);
+						Assert.assertTrue(wasChecked==isChecked);
+					}
+					else if (i==3){
+						boolean wasChecked = ul.privacyCheckboxStatus.get(i);
+						System.out.println(wasChecked);
+						Assert.assertFalse("Blocked list default setting does not persists",wasChecked);
+					}
+					else{
+						UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
+						UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 6);				
+						UiObject favouriteLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);	
+						System.out.println(favouriteLbl.getText());
+						Assert.assertTrue("Favourite privacy setting is not coming", favouriteLbl.getText().equals(PrivacyScreen.FAVOURITE_LBL));
+					}
+
 				}
 
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+		else{
+			try {
+				System.out.println("VERIFYING PRIVACY SETTING PERSISTENCE");
+				super.goToHome();
+				super.openOverflowMenu();
+				clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
+				clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
+
+				for(int i=0;i<5;i++){
+					System.out.println(i);
+					if(i==0){
+						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
+						boolean wasChecked = ul.privacyCheckboxStatus.get(i);
+						boolean isChecked = object.isChecked();
+						System.out.println(wasChecked);
+						System.out.println(isChecked);
+						Assert.assertTrue(wasChecked==isChecked);
+					}
+					else if(i==1){
+						UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
+						UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 2);				
+						UiObject lastSeenLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);
+						System.out.println(lastSeenLbl.getText());
+						Assert.assertTrue("Show to My contacts is not present",lastSeenLbl.getText().contains("Show Last Seen : My Contacts"));
+					}
+					else if (i==2){
+						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i-1));
+						boolean wasChecked = ul.privacyCheckboxStatus.get(i);
+						boolean isChecked = object.isChecked();
+						System.out.println(wasChecked);
+						System.out.println(isChecked);
+						Assert.assertTrue(wasChecked==isChecked);
+					}
+					else if (i==3){
+						boolean wasChecked = ul.privacyCheckboxStatus.get(i);
+						System.out.println(wasChecked);
+						Assert.assertFalse("Blocked list default setting does not persists",wasChecked);
+					}
+					else{
+						UiObject listView = getElement(Locators.CLASSNAME, "android.widget.ListView");
+						UiObject llayout = getChild(listView, Locators.CLASSNAME, "android.widget.LinearLayout", 6);				
+						UiObject favouriteLbl = getChild(llayout,Locators.CLASSNAME, "android.widget.TextView", 1);	
+						System.out.println(favouriteLbl.getText());
+						Assert.assertTrue("Favourite privacy setting is not coming", favouriteLbl.getText().equals(PrivacyScreen.FAVOURITE_LBL));
+					}
+
+				}
+
+			}
+
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}	 
 
@@ -1895,7 +1956,7 @@ try {
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
 				+"1.Go to account settings "+"\n"+
 				"2.Take user account backup");
-		
+
 		try {
 			if (version.equals("3.5.1")) {
 				System.out.println("Skipping backup as version does not have backup functionality");

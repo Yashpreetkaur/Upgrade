@@ -10,7 +10,8 @@ package com.bsb.hike.objectlocator;
 public class GroupInfoScreen {
 
 	public static String GROUP_INFO_TITLE_LBL= "Group Info" ; 
-	public static String PEOPLE_LBL= " people" ; //add number of people <number> in the object to get full object ex. '4 people'
+	public static String MEMBER_LBL= " members" ;//add number of people <number> in the object to get full object ex. '4 people'
+	public static String PEOPLE_LBL=" people";
 	public static String PROFILE_IMAGE= "Profile Image" ;
 	public static String ADD_PEOPLE_LBL= "Add people" ;
 	public static String ADD_A_MEMBER_ICON="ADD A MEMBER";//content description
