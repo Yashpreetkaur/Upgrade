@@ -34,7 +34,7 @@ import com.bsb.hike.library.UpdateLibrary_3_9_0;
 import com.bsb.hike.library.UpdateLibrary_3_9_2;
 import com.bsb.hike.library.UpdateLibrary_3_9_6;
 import com.bsb.hike.library.UpdateLibrary_3_9_7;
-import com.bsb.hike.library.UpdateLibrary_3_9_7_49_3;
+import com.bsb.hike.library.UpdateLibrary_3_9_8;
 
 
 public class UpdateResetTests extends UpdateLibrary {
@@ -72,7 +72,7 @@ public class UpdateResetTests extends UpdateLibrary {
 				ul.addPin();
 				ul.createGCandUpdateName();		
 				ul.shareContentToGroup();
-				ul.shareMediaToGroup();
+				ul.shareMediaToGroup(appVersions[index]);
 				ul.setStatusUpdate();
 				ul.blockUser(appVersions[index]);
 				ul.captureSmsCountBeforeUpgrade(appVersions[index]);
@@ -96,7 +96,7 @@ public class UpdateResetTests extends UpdateLibrary {
 				new_ver.verifyEditedProfileAfterReset();
 				new_ver.verifyHikeMessagePersistence(newAppVersion,ul);
 				new_ver.verifySmsMessagePersistence(newAppVersion,ul);
-				new_ver.verifyGroupChatPersistence(newAppVersion,ul);
+//				new_ver.verifyGroupChatPersistence(newAppVersion,ul);
 				new_ver.verifyStatusUpdatePersistence(newAppVersion);
 				new_ver.verifyBlockedUserPersistance(newAppVersion,ul);
 				new_ver.verifySmsCountPersistence(ul);
@@ -105,7 +105,7 @@ public class UpdateResetTests extends UpdateLibrary {
 				new_ver.verifyAppVersionPersistenceFromServer();
 				new_ver.verifyAddedMemberToGroupPersists();
 				new_ver.verifyPinPersist(newAppVersion);
-				new_ver.verifyCreatedGroupAndMemberCountPersist();
+				new_ver.verifyCreatedGroupAndMemberCountPersist(newAppVersion);
 				new_ver.verifyShareContentPersistance(newAppVersion);
 				new_ver.verifySharedMediaPersistance(newAppVersion);
 				//ul.addDndMemberToGroup();
@@ -219,7 +219,7 @@ public class UpdateResetTests extends UpdateLibrary {
 			ul=new UpdateLibrary_3_9_7();
 		}
 		else if(version.equals(newAppVersion)){
-			ul=new UpdateLibrary_3_9_7_49_3();
+			ul=new UpdateLibrary_3_9_8();
 		}
 		else{
 			ul=new UpdateLibrary();
