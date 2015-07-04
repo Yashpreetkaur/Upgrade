@@ -32,7 +32,10 @@ import com.bsb.hike.library.UpdateLibrary_3_8_8;
 import com.bsb.hike.library.UpdateLibrary_3_8_9;
 import com.bsb.hike.library.UpdateLibrary_3_9_0;
 import com.bsb.hike.library.UpdateLibrary_3_9_2;
-import com.bsb.hike.library.UpdateLibrary_3_9_6_37;
+import com.bsb.hike.library.UpdateLibrary_3_9_6;
+import com.bsb.hike.library.UpdateLibrary_3_9_7;
+import com.bsb.hike.library.UpdateLibrary_3_9_8;
+
 
 public class UpdateVersionTests extends UpdateLibrary {
 
@@ -66,16 +69,16 @@ public class UpdateVersionTests extends UpdateLibrary {
 					ul.addPin();
 					ul.createGCandUpdateName();		
 					ul.shareContentToGroup();
-					ul.shareMediaToGroup();
+					ul.shareMediaToGroup(appVersions[index]);
 					ul.setStatusUpdate();
-					ul.blockUser();
+					ul.blockUser(appVersions[index]);
 					ul.captureSmsCountBeforeUpgrade(appVersions[index]);
 					ul.toggleNotificationCheckbox();
 					ul.toggleAutoDownloadCheckbox(appVersions[index]);
-					ul.togglePrivacyCheckbox();
+					ul.togglePrivacyCheckbox(appVersions[index]);
 					ul.addHikeContactAsFavorite(appVersions[index]);
-//					//ul.stickerEnableDisable();
-					ul.downloadStickerCategory();
+//					ul.stickerEnableDisable();
+					ul.downloadStickerCategory(appVersions[index]);
 					ul.putAppInBackground();
 					ul.updateAppVersion();
 ////					//AFTER UPGRADE
@@ -186,8 +189,15 @@ public class UpdateVersionTests extends UpdateLibrary {
 		else if(version.equals("3.9.2")){
 			ul=new UpdateLibrary_3_9_2();
 		}
+		else if(version.equals("3.9.6")){
+			ul=new UpdateLibrary_3_9_6();
+		}
+		else if(version.equals("3.9.7")){
+			ul=new UpdateLibrary_3_9_7();
+		}
 		else if(version.equals(newAppVersion)){
-			ul=new UpdateLibrary_3_9_6_37();
+			ul=new UpdateLibrary_3_9_8();
+
 		}
 		else{
 			ul=new UpdateLibrary();
