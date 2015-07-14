@@ -14,13 +14,16 @@ import com.android.uiautomator.core.UiDevice;
 import com.android.uiautomator.core.UiObject;
 import com.android.uiautomator.core.UiObjectNotFoundException;
 import com.android.uiautomator.core.UiSelector;
+import com.bsb.hike.chatevents.ChatEventsObject;
 import com.bsb.hike.common.AndroidClassNames;
 import com.bsb.hike.common.Locators;
 import com.bsb.hike.objectlocator.AttachmentListScreen;
 import com.bsb.hike.objectlocator.AutoDownloadMediaScreen;
 import com.bsb.hike.objectlocator.ChatThreadScreen;
+import com.bsb.hike.objectlocator.EditGroupNameScreen;
 import com.bsb.hike.objectlocator.EditProfileScreen;
 import com.bsb.hike.objectlocator.FavoriteScreen;
+import com.bsb.hike.objectlocator.GroupChatThreadOverflowListScreen;
 import com.bsb.hike.objectlocator.GroupInfoScreen;
 import com.bsb.hike.objectlocator.HomeScreen;
 import com.bsb.hike.objectlocator.ImageSelectionScreen;
@@ -29,6 +32,8 @@ import com.bsb.hike.objectlocator.LoginPhoneNumberScreen;
 import com.bsb.hike.objectlocator.MyProfileOverflowOptionsScreen;
 import com.bsb.hike.objectlocator.MyProfileScreen;
 import com.bsb.hike.objectlocator.NewChatContactSelectScreen;
+import com.bsb.hike.objectlocator.NewGroupParticipantSelectionScreen;
+import com.bsb.hike.objectlocator.NewGroupScreen;
 import com.bsb.hike.objectlocator.OverFlowListScreen;
 import com.bsb.hike.objectlocator.PinScreen;
 import com.bsb.hike.objectlocator.SettingsScreen;
@@ -39,7 +44,7 @@ import com.bsb.hike.popup.screen.ChooseImageQualityScreen;
 import com.bsb.hike.popup.screen.ConfirmYourNumberPopUpScreen;
 import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 
-public class UpdateLibrary_3_9_8_31 extends UpdateLibrary{
+public class UpdateLibrary_3_9_8_81 extends UpdateLibrary{
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
 		System.out.println("CREATING NEW USER... "+newAppVersion);
 
@@ -139,12 +144,8 @@ public class UpdateLibrary_3_9_8_31 extends UpdateLibrary{
 		System.out.println("STARTING CHAT WITH UNSAVED USER... "+newAppVersion);
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 		enterText(msisdn);
 		clickOnElement(Locators.NAME, "Tap to start chat");
-		//	    	clickOnElement(Locators.NAME,"1");
-
 		sendMessage(message);
 	}
 
@@ -153,41 +154,110 @@ public class UpdateLibrary_3_9_8_31 extends UpdateLibrary{
 
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
-		//		enterText(msisdn);
 		clickOnElement(Locators.NAME, name);
-		//	    	clickOnElement(Locators.NAME,"1");
-
 		sendMessage(message);
+	}
+	public void addMemberToGroup(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Add member to the created group.");
+		try {
+			clickOnElement(Locators.NAME, groupName);
+			clickOnElement(Locators.NAME, groupName);
+			Thread.sleep(2000);
+			clickOnElement(Locators.NAME,GroupInfoScreen.ADD_A_MEMBER_ICON);
+			clickElementInList(Locators.NAME, HIKE_CONTACT_NAME);
+			clickElementInList(Locators.NAME,HIKE_CONTACT_NAME_1);
+			clickOnElement(Locators.NAME,NewGroupParticipantSelectionScreen.DONE_LBL);
+			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME_1+" and "+HIKE_CONTACT_NAME));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void togglePrivacyCheckbox(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Change last seen settings from privacy screen."+"\n"+
+				"2.Note the status of all elements.");
+		try {
+			System.out.println("CHANGING PRIVACY SETTINGS");
+			goToHome();
+			openOverflowMenu();
+			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
+			clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
+			int count=0;
+			for(int i=0 ; i<5; i++){
+				if(i==1 || i==2 || i==3 || i==4){
+					privacyCheckboxStatus.put(i, false);
+				}
+				else{
+					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(count));
+					object.click();
+					System.out.println("CLICKING ON CHECKBOX");
+					count++;
+					privacyCheckboxStatus.put(i, object.isChecked());
+				}
+			}
+			Iterator iterator = privacyCheckboxStatus.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				System.out.println("The key is: " + mapEntry.getKey()
+						+ ",value is :" + mapEntry.getValue());
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void createGCandUpdateName() throws UiObjectNotFoundException, InterruptedException{
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Create group and update name."+"\n"+
+				"2.Verify that group name change mqtt packet appears.");
+		try {
+			goToHome();
+			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.OVERFLOW_ICON);
+			clickOnElement(Locators.NAME, OverFlowListScreen.NEW_GROUP_LBL);
+			enterText(Test_Group_Name);
+			clickOnElement(Locators.NAME,NewGroupScreen.NEXT_LBL);
+			clickElementInList(Locators.NAME, HIKE_CONTACT_NAME);
+			clickElementInList(Locators.NAME, HIKE_CONTACT_NAME_1);
+			clickElementInList(Locators.NAME, HIKE_CONTACT_NAME_2);
+			clickOnElement(Locators.NAME,NewGroupParticipantSelectionScreen.DONE_LBL);
+			Assert.assertTrue("Failed to create group of 4 members",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.MEMBER_LBL));
+			clickOnElement(Locators.CONTENT_DESCRIPTION, ChatThreadScreen.OVERFLOW_ICON);
+			clickOnElement(Locators.NAME, GroupChatThreadOverflowListScreen.GROUP_INFO_LBL);
+			clickOnElement(Locators.CONTENT_DESCRIPTION,GroupInfoScreen.EDIT_GROUP_NAME_ICON);
+			clearFocussedElementText(Test_Group_Name.length());
+			enterText(Updated_Test_Group_Name);
+			clickOnElement(Locators.NAME, EditGroupNameScreen.DONE_BTN);
+			Assert.assertTrue("Failed to update group name",isElementPresentOnScreen(Locators.NAME,Updated_Test_Group_Name));
+			clickOnElement(Locators.NAME, GroupInfoScreen.GROUP_INFO_TITLE_LBL);
+			Assert.assertTrue("Failed to show group name update notification", isElementPresentOnScreen(Locators.NAME,"You"+ChatEventsObject.GROUP_CHAT_NAME_CHANGE_EVENT));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void sendMessage() throws UiObjectNotFoundException{
 		System.out.println("Sending Message... "+newAppVersion);
 		int sendButtonIndex=2;
-
 		UiObject FrameLayout = getElement(Locators.CLASSNAME, AndroidClassNames.FRAME_LAYOUT, 0);
 		UiObject RelativeLayout = getChild(FrameLayout,Locators.CLASSNAME, AndroidClassNames.RELATIVE_LAYOUT, 0);
 		UiObject Llayout = getChild(RelativeLayout,Locators.CLASSNAME, AndroidClassNames.LINEAR_LAYOUT, 0);
 		UiObject Rlayout = getChild(Llayout, Locators.CLASSNAME, AndroidClassNames.RELATIVE_LAYOUT, 2);
 		UiObject R0layout= getChild(Rlayout, Locators.CLASSNAME, AndroidClassNames.RELATIVE_LAYOUT, 0);
-
 		try{
 			System.out.println(R0layout.getChildCount());
 			if(R0layout.getChildCount() >= 4){
 				sendButtonIndex++;
 			}
-
 		}catch(UiObjectNotFoundException e){
 			System.out.println("Layout does not have 4 child");
 		}
-
 		UiObject sendButton = getChild(R0layout, Locators.CLASSNAME, AndroidClassNames.IMAGE_BUTTON, sendButtonIndex);
 		clickOnElement(sendButton);
-
 		//		UiDevice.getInstance().pressBack();
 	}
-
 	public void sendHikeMessage(String version){
 		try {
 			System.out.println("SENDING HIKE MESSAGE..."+newAppVersion);
@@ -198,38 +268,32 @@ public class UpdateLibrary_3_9_8_31 extends UpdateLibrary{
 			String messageSent = "automation" + RandomStringUtils.randomNumeric(5);
 			startSingleChatAndSendMessageToHikeUser(HIKE_CONTACT_NAME , messageSent);	
 			listOfMessages.add(messageSent);
-
 			Hike2HikeMessageSupport hikeMessage = new Hike2HikeMessageSupport();
 			String messageReceived = "auto h2h#" + RandomStringUtils.randomNumeric(4);
 			System.out.println("aaaaaaaaaaaaaaaaaaaaaa"+getDEFAULT_MSISDN());
 			hikeMessage.sendHikeMessage(HIKE_NUMBER_1,getDEFAULT_MSISDN() , messageReceived);
 			System.out.println(getDEFAULT_MSISDN());
 			listOfMessages.add(messageReceived);
-
 			hikeMsgHm.put(HIKE_CONTACT_NAME, listOfMessages);
 			//			UiDevice.getInstance().pressBack();
 			Assert.assertTrue("message is not sent", isElementPresentOnScreen(Locators.NAME,messageSent));
 			Thread.sleep(8000);
 			Assert.assertTrue("message is not sent", isElementPresentOnScreen(Locators.NAME,messageReceived));
 			goToHome();			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Unable to send message");
 		}
 	}
-
 	public void sendHike2SmsMessage(String version){
 		try {
 			System.out.println("SENDING MESSAGE TO SMS USER... "+newAppVersion);
-
 			List<String> listOfMessages = new ArrayList<String>();
 			goToHome();
 			smsUser = "+9111"+RandomStringUtils.randomNumeric(8);
 			String messageSent = "automation" + RandomStringUtils.randomNumeric(5);
 			startSingleChatAndSendMessageToUnsavedNumber(smsUser , messageSent);	
 			Assert.assertTrue("message is not sent", isElementPresentOnScreen(Locators.NAME,messageSent));
-
 			listOfMessages.add(messageSent);
 			hikeMsgSm.put(smsUser, listOfMessages);
 			goToHome();
@@ -242,9 +306,7 @@ public class UpdateLibrary_3_9_8_31 extends UpdateLibrary{
 		try {
 			int counter =0;
 			System.out.println("GOING BACK TO HOME SCREEN... "+newAppVersion);
-
 			UiObject startChat = getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			
 			while(!startChat.exists() && counter <5){
 				UiDevice.getInstance().pressBack();
 				startChat= getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
@@ -365,8 +427,6 @@ public class UpdateLibrary_3_9_8_31 extends UpdateLibrary{
 			clickOnElement(Locators.NAME, FavoriteScreen.FAV_TITLE_LBL);
 			clickOnElement(Locators.NAME, TimelineScreen.TIMELINE_TITLE_LBL);
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 			Assert.assertTrue("Unable to add favorite",isElementPresentOnScreen(Locators.NAME, "FAVORITES"));
 		} catch (Exception e) {
 			e.printStackTrace();

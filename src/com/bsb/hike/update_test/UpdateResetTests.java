@@ -35,6 +35,9 @@ import com.bsb.hike.library.UpdateLibrary_3_9_2;
 import com.bsb.hike.library.UpdateLibrary_3_9_6;
 import com.bsb.hike.library.UpdateLibrary_3_9_7;
 import com.bsb.hike.library.UpdateLibrary_3_9_8;
+import com.bsb.hike.library.UpdateLibrary_3_9_8_41;
+import com.bsb.hike.library.UpdateLibrary_3_9_8_81;
+import com.bsb.hike.library.UpdateLibrary_3_9_9;
 
 
 public class UpdateResetTests extends UpdateLibrary {
@@ -96,7 +99,7 @@ public class UpdateResetTests extends UpdateLibrary {
 				new_ver.verifyEditedProfileAfterReset();
 				new_ver.verifyHikeMessagePersistence(newAppVersion,ul);
 				new_ver.verifySmsMessagePersistence(newAppVersion,ul);
-//				new_ver.verifyGroupChatPersistence(newAppVersion,ul);
+				new_ver.verifyGroupChatPersistence(newAppVersion,ul);
 				new_ver.verifyStatusUpdatePersistence(newAppVersion);
 				new_ver.verifyBlockedUserPersistance(newAppVersion,ul);
 				new_ver.verifySmsCountPersistence(ul);
@@ -218,8 +221,14 @@ public class UpdateResetTests extends UpdateLibrary {
 		else if(version.equals("3.9.7")){
 			ul=new UpdateLibrary_3_9_7();
 		}
-		else if(version.equals(newAppVersion)){
+		else if(version.equals("3.9.8")){
 			ul=new UpdateLibrary_3_9_8();
+		}
+		else if(version.equals("3.9.8.41")){
+			ul=new UpdateLibrary_3_9_8_41();
+		}
+		else if(version.equals(newAppVersion)){
+			ul=new UpdateLibrary_3_9_8_81();
 		}
 		else{
 			ul=new UpdateLibrary();

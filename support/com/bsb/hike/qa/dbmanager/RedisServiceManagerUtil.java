@@ -32,7 +32,7 @@ public class RedisServiceManagerUtil {
     {
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxActive(100);
-        poolConfig.setMaxIdle(100);
+        poolConfig.setMaxIdle(20);
         redisPool = new JedisPool(poolConfig, redisHost, redisPort, DEFAULT_TIMEOUT, null, dbnum);
     }
     

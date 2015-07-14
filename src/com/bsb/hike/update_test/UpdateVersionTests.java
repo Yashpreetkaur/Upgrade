@@ -35,6 +35,9 @@ import com.bsb.hike.library.UpdateLibrary_3_9_2;
 import com.bsb.hike.library.UpdateLibrary_3_9_6;
 import com.bsb.hike.library.UpdateLibrary_3_9_7;
 import com.bsb.hike.library.UpdateLibrary_3_9_8;
+import com.bsb.hike.library.UpdateLibrary_3_9_8_41;
+import com.bsb.hike.library.UpdateLibrary_3_9_8_81;
+import com.bsb.hike.library.UpdateLibrary_3_9_9;
 
 
 public class UpdateVersionTests extends UpdateLibrary {
@@ -62,7 +65,7 @@ public class UpdateVersionTests extends UpdateLibrary {
 					setSMSCredit(15);
 					ul.updateProfile();
 					ul.sendHikeMessage(appVersions[index]);
-					ul.sendSticker(appVersions[index]);
+//					ul.sendSticker(appVersions[index]);
 					ul.sendHike2SmsMessage(appVersions[index]);
 					ul.createGcAndSendMessage();
 					ul.addMemberToGroup();
@@ -195,10 +198,16 @@ public class UpdateVersionTests extends UpdateLibrary {
 		else if(version.equals("3.9.7")){
 			ul=new UpdateLibrary_3_9_7();
 		}
-		else if(version.equals(newAppVersion)){
+		else if(version.equals("3.9.8")){
 			ul=new UpdateLibrary_3_9_8();
-
 		}
+		else if(version.equals("3.9.8.41")){
+			ul=new UpdateLibrary_3_9_8_41();
+		}
+		else if(version.equals(newAppVersion)){
+			ul=new UpdateLibrary_3_9_8_81();
+		}
+		
 		else{
 			ul=new UpdateLibrary();
 		}

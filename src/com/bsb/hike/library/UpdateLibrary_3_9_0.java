@@ -16,10 +16,14 @@ import com.android.uiautomator.core.UiObjectNotFoundException;
 import com.android.uiautomator.core.UiSelector;
 import com.bsb.hike.common.AndroidClassNames;
 import com.bsb.hike.common.Locators;
+import com.bsb.hike.objectlocator.AttachmentListScreen;
 import com.bsb.hike.objectlocator.AutoDownloadMediaScreen;
+import com.bsb.hike.objectlocator.ChatThreadScreen;
 import com.bsb.hike.objectlocator.EditProfileScreen;
 import com.bsb.hike.objectlocator.FavoriteScreen;
+import com.bsb.hike.objectlocator.GroupInfoScreen;
 import com.bsb.hike.objectlocator.HomeScreen;
+import com.bsb.hike.objectlocator.ImageSelectionScreen;
 import com.bsb.hike.objectlocator.LoginAboutYouScreen;
 import com.bsb.hike.objectlocator.LoginPhoneNumberScreen;
 import com.bsb.hike.objectlocator.MyProfileOverflowOptionsScreen;
@@ -31,6 +35,7 @@ import com.bsb.hike.objectlocator.SettingsScreen;
 import com.bsb.hike.objectlocator.StatusScreen;
 import com.bsb.hike.objectlocator.TimelineScreen;
 import com.bsb.hike.objectlocator.WelcomeScreen;
+import com.bsb.hike.popup.screen.ChooseImageQualityScreen;
 import com.bsb.hike.popup.screen.ConfirmYourNumberPopUpScreen;
 import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 
@@ -398,6 +403,9 @@ public class UpdateLibrary_3_9_0 extends UpdateLibrary{
 	public void toggleNotificationCheckbox(){
 		try {
 			System.out.println("CHANGING NOTIFICATION SETTINGS...3.9.0");
+			System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+					+"1.Change notification settings."+"\n"+
+					"2.Note the status of all elements.");
 			goToHome();
 			openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -433,6 +441,9 @@ public class UpdateLibrary_3_9_0 extends UpdateLibrary{
 	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version){
 		try {
 			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE...3.9.0");
+			System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+					+"1.Auto Download settings should be same after upgrade."+"\n"+
+					"2.Default settings should be applicable to new options.");
 			super.goToHome();
 			super.openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -494,6 +505,27 @@ public class UpdateLibrary_3_9_0 extends UpdateLibrary{
 					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	public void shareMediaToGroup(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Share media in the group and verify shared media appears under group info.");
+		try {
+			System.out.println("Sharing media to the group");
+			goToHome();
+			clickOnElement(Locators.NAME, Updated_Test_Group_Name);
+			clickOnElement(Locators.CONTENT_DESCRIPTION, ChatThreadScreen.ATTACH_ICON);
+			clickOnElement(Locators.NAME, AttachmentListScreen.GALLERY_LBL);
+			UiDevice.getInstance().click(171, 302);
+			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.TAP_AND_HOLD_TO_SELECT_MULTIPLE_FILES));
+			UiDevice.getInstance().click(108, 267);
+			clickOnElement(Locators.NAME,"Send");
+			clickOnElement(Locators.NAME, ChooseImageQualityScreen.SEND_BTN);
+			Assert.assertTrue("Failed to redirect to chat thread",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.PEOPLE_LBL));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

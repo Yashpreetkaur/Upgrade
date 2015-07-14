@@ -411,6 +411,9 @@ public class UpdateLibrary_3_9_7 extends UpdateLibrary{
 	public void toggleNotificationCheckbox(){
 		try {
 			System.out.println("CHANGING NOTIFICATION SETTINGS... "+newAppVersion);
+			System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+					+"1.Change notification settings."+"\n"+
+					"2.Note the status of all elements.");
 			goToHome();
 			openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -446,6 +449,9 @@ public class UpdateLibrary_3_9_7 extends UpdateLibrary{
 	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version,UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE... "+newAppVersion);
+			System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+					+"1.Auto Download settings should be same after upgrade."+"\n"+
+					"2.Default settings should be applicable to new options.");
 			super.goToHome();
 			super.openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -553,7 +559,7 @@ public class UpdateLibrary_3_9_7 extends UpdateLibrary{
 			clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
 			int count=0;
 			for(int i=0 ; i<5; i++){
-				if(i==1 || i==3 || i==4){
+				if(i==1 || i==2 || i==3 || i==4){
 					privacyCheckboxStatus.put(i, false);
 				}
 				else{

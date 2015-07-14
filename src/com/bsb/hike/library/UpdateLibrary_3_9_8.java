@@ -14,10 +14,12 @@ import com.android.uiautomator.core.UiDevice;
 import com.android.uiautomator.core.UiObject;
 import com.android.uiautomator.core.UiObjectNotFoundException;
 import com.android.uiautomator.core.UiSelector;
+import com.bsb.hike.chatevents.ChatEventsObject;
 import com.bsb.hike.common.AndroidClassNames;
 import com.bsb.hike.common.Locators;
 import com.bsb.hike.objectlocator.AttachmentListScreen;
 import com.bsb.hike.objectlocator.AutoDownloadMediaScreen;
+import com.bsb.hike.objectlocator.BlockedUserScreen;
 import com.bsb.hike.objectlocator.ChatThreadScreen;
 import com.bsb.hike.objectlocator.EditProfileScreen;
 import com.bsb.hike.objectlocator.FavoriteScreen;
@@ -29,10 +31,13 @@ import com.bsb.hike.objectlocator.LoginPhoneNumberScreen;
 import com.bsb.hike.objectlocator.MyProfileOverflowOptionsScreen;
 import com.bsb.hike.objectlocator.MyProfileScreen;
 import com.bsb.hike.objectlocator.NewChatContactSelectScreen;
+import com.bsb.hike.objectlocator.NewGroupParticipantSelectionScreen;
 import com.bsb.hike.objectlocator.OverFlowListScreen;
 import com.bsb.hike.objectlocator.PinScreen;
+import com.bsb.hike.objectlocator.PrivacyScreen;
 import com.bsb.hike.objectlocator.SettingsScreen;
 import com.bsb.hike.objectlocator.StatusScreen;
+import com.bsb.hike.objectlocator.StickerShop;
 import com.bsb.hike.objectlocator.TimelineScreen;
 import com.bsb.hike.objectlocator.WelcomeScreen;
 import com.bsb.hike.popup.screen.ChooseImageQualityScreen;
@@ -42,7 +47,9 @@ import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
 		System.out.println("CREATING NEW USER... "+newAppVersion);
-
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Sign up."+"\n"+
+				"2.Check to ensure signup.");
 		try {
 			//setting pin for current user
 			//	setPin();
@@ -81,21 +88,21 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			if(isElementPresentOnScreen(Locators.NAME,"AWESOME")){
 				clickOnElement(Locators.NAME, "AWESOME");
 			}
-
 		}catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Unable to create new user");
 		}
-
 	}
 	public void updateProfile(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Update user name from edit profile screen."+"\n"+
+				"2.Check updated name in profile screen");
 		try {
 			System.out.println("UPDATING PROFILE.... "+newAppVersion);
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-//			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 			enterText(HIKE_NUMBER_1);
-			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
+//			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
 			goToHome();
 			openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -107,10 +114,8 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			enterText(updatedName);
 			clickOnElement(Locators.NAME, EditProfileScreen.EDIT_PROFILE_TITLE_LBL);
 			Assert.assertTrue("the name did not get updated",isElementPresentOnScreen(Locators.NAME,updatedName));
-
 			clickOnElement(Locators.CONTENT_DESCRIPTION, MyProfileScreen.OVERFLOW_MENU_LBL);
 			clickOnElement(Locators.NAME, MyProfileOverflowOptionsScreen.EDIT_PROFILE_LBL);
-
 			UiObject email_txt=getElement(Locators.NAME, "Email");
 			UiObject email=email_txt.getFromParent(new UiSelector().className(AndroidClassNames.EDIT_TEXT));
 			clickOnElement(email);
@@ -120,74 +125,58 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			clickOnElement(Locators.NAME, MyProfileOverflowOptionsScreen.EDIT_PROFILE_LBL);
 			Assert.assertTrue("the email did not get updated",isElementPresentOnScreen(Locators.NAME,PROFILE_EMAIL));
 			clickOnElement(Locators.NAME, EditProfileScreen.EDIT_PROFILE_TITLE_LBL);
-
 			UiObject view = getElement(Locators.CLASSNAME, "android.view.View");
 			UiObject flayout = getChild(view, Locators.CLASSNAME, "android.widget.FrameLayout", 1);
 			UiObject llayout = getChild(flayout, Locators.CLASSNAME, "android.widget.LinearLayout", 1);
 			UiObject Me = getChild(llayout, Locators.CLASSNAME, "android.widget.TextView", 0);
 			clickOnElement(Me);
-
 			clickOnElement(Locators.NAME, SettingsScreen.SETTTINGS_TITLE_LBL);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Unable to update profile info..");
 		}
 	}
-
 	public void startSingleChatAndSendMessageToUnsavedNumber(String msisdn , String message  ) throws UiObjectNotFoundException, InterruptedException{
 		System.out.println("STARTING CHAT WITH UNSAVED USER... "+newAppVersion);
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 		enterText(msisdn);
 		clickOnElement(Locators.NAME, "Tap to start chat");
 		//	    	clickOnElement(Locators.NAME,"1");
 
 		sendMessage(message);
 	}
-
 	public void startSingleChatAndSendMessageToHikeUser(String name , String message  ) throws UiObjectNotFoundException, InterruptedException{
 		System.out.println("STARTING CHAT WITH HIKE USER... "+newAppVersion);
-
 		goToHome();
 		clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 		clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 		//		enterText(msisdn);
 		clickOnElement(Locators.NAME, name);
 		//	    	clickOnElement(Locators.NAME,"1");
-
 		sendMessage(message);
 	}
-
 	public void sendMessage() throws UiObjectNotFoundException{
 		System.out.println("Sending Message... "+newAppVersion);
 		int sendButtonIndex=2;
-
 		UiObject FrameLayout = getElement(Locators.CLASSNAME, AndroidClassNames.FRAME_LAYOUT, 0);
 		UiObject RelativeLayout = getChild(FrameLayout,Locators.CLASSNAME, AndroidClassNames.RELATIVE_LAYOUT, 0);
 		UiObject Llayout = getChild(RelativeLayout,Locators.CLASSNAME, AndroidClassNames.LINEAR_LAYOUT, 0);
 		UiObject Rlayout = getChild(Llayout, Locators.CLASSNAME, AndroidClassNames.RELATIVE_LAYOUT, 2);
 		UiObject R0layout= getChild(Rlayout, Locators.CLASSNAME, AndroidClassNames.RELATIVE_LAYOUT, 0);
-
 		try{
 			System.out.println(R0layout.getChildCount());
 			if(R0layout.getChildCount() >= 4){
 				sendButtonIndex++;
 			}
-
 		}catch(UiObjectNotFoundException e){
 			System.out.println("Layout does not have 4 child");
 		}
-
 		UiObject sendButton = getChild(R0layout, Locators.CLASSNAME, AndroidClassNames.IMAGE_BUTTON, sendButtonIndex);
 		clickOnElement(sendButton);
-
 		//		UiDevice.getInstance().pressBack();
 	}
-
 	public void sendHikeMessage(String version){
 		try {
 			System.out.println("SENDING HIKE MESSAGE..."+newAppVersion);
@@ -198,38 +187,36 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			String messageSent = "automation" + RandomStringUtils.randomNumeric(5);
 			startSingleChatAndSendMessageToHikeUser(HIKE_CONTACT_NAME , messageSent);	
 			listOfMessages.add(messageSent);
-
 			Hike2HikeMessageSupport hikeMessage = new Hike2HikeMessageSupport();
 			String messageReceived = "auto h2h#" + RandomStringUtils.randomNumeric(4);
 			System.out.println("aaaaaaaaaaaaaaaaaaaaaa"+getDEFAULT_MSISDN());
 			hikeMessage.sendHikeMessage(HIKE_NUMBER_1,getDEFAULT_MSISDN() , messageReceived);
 			System.out.println(getDEFAULT_MSISDN());
 			listOfMessages.add(messageReceived);
-
 			hikeMsgHm.put(HIKE_CONTACT_NAME, listOfMessages);
 			//			UiDevice.getInstance().pressBack();
 			Assert.assertTrue("message is not sent", isElementPresentOnScreen(Locators.NAME,messageSent));
 			Thread.sleep(8000);
 			Assert.assertTrue("message is not sent", isElementPresentOnScreen(Locators.NAME,messageReceived));
 			goToHome();			
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Unable to send message");
 		}
 	}
-
 	public void sendHike2SmsMessage(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Start a new chat with SMS user."+"\n"+
+				"2.Send a message."+"\n"+
+				"3.Check that message has been successfully sent.");
 		try {
 			System.out.println("SENDING MESSAGE TO SMS USER... "+newAppVersion);
-
 			List<String> listOfMessages = new ArrayList<String>();
 			goToHome();
 			smsUser = "+9111"+RandomStringUtils.randomNumeric(8);
 			String messageSent = "automation" + RandomStringUtils.randomNumeric(5);
 			startSingleChatAndSendMessageToUnsavedNumber(smsUser , messageSent);	
 			Assert.assertTrue("message is not sent", isElementPresentOnScreen(Locators.NAME,messageSent));
-
 			listOfMessages.add(messageSent);
 			hikeMsgSm.put(smsUser, listOfMessages);
 			goToHome();
@@ -242,9 +229,7 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 		try {
 			int counter =0;
 			System.out.println("GOING BACK TO HOME SCREEN... "+newAppVersion);
-
-			UiObject startChat = getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			
+			UiObject startChat = getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);			
 			while(!startChat.exists() && counter <5){
 				UiDevice.getInstance().pressBack();
 				startChat= getElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
@@ -258,14 +243,11 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			e.printStackTrace();
 		}
 	}
-
 	public void captureSmsCountBeforeUpgrade(String version){
 		try {
 			System.out.println("CAPTURING SMS COUNT BEFORE UPGRADE... "+newAppVersion);
-
 			goToHome();
 			openOverflowMenu();
-
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
 			UiObject smsElement = new UiObject(new UiSelector().textStartsWith("SMS"));
 			System.out.println(smsElement.getText());
@@ -277,7 +259,6 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			Assert.fail("Unable to capture sms count before upgrade");
 		}
 	}
-
 	public void openOverflowMenu(){
 		try {
 			System.out.println("Opening Overflow Menu... "+newAppVersion);
@@ -290,48 +271,40 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			e.printStackTrace();
 		}
 	}
-
 	public void toggleAutoDownloadCheckbox(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Change auto download settings from auto download tab."+"\n"+
+				"2.Note the status of all elements.");
 		try {
 			System.out.println("CHANGING AUTO DOWNLOAD SETTINGS... "+newAppVersion);
-
 			goToHome();
 			openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
 			clickOnElement(Locators.NAME, SettingsScreen.AUTO_DOWNLOAD_MEDIA_LBL);
-
 			UiObject compressedVideo = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(0));
 			compressedVideo.click();
 			autoDownloadCheckboxStatus.put(0, compressedVideo.isChecked());
-
 			UiObject imagesMobile = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(1));
 			imagesMobile.click();
 			autoDownloadCheckboxStatus.put(1, imagesMobile.isChecked());
-
 			UiObject videoMobile = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(2));
 			videoMobile.click();
 			autoDownloadCheckboxStatus.put(2, videoMobile.isChecked());
-
 			UiObject audioMobile = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(3));
 			audioMobile.click();
 			autoDownloadCheckboxStatus.put(3, audioMobile.isChecked());
-
 			UiObject imagesWifi = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(4));
 			imagesWifi.click();
 			autoDownloadCheckboxStatus.put(4, imagesWifi.isChecked());
-
 			UiObject Auto_Download_media = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_CONNECTED_TO_WIFI_LBL);
 			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
 			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
-
 			UiObject videoWifi = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(5));
 			videoWifi.click();
 			autoDownloadCheckboxStatus.put(5,videoWifi.isChecked());
-
 			UiObject audioWifi = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(6));
 			audioWifi.click();
 			autoDownloadCheckboxStatus.put(6, audioWifi.isChecked());
-
 			Iterator iterator = autoDownloadCheckboxStatus.entrySet().iterator();
 			while (iterator.hasNext()) {
 				Map.Entry mapEntry = (Map.Entry) iterator.next();
@@ -342,14 +315,12 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			e.printStackTrace();
 		}
 	}
-
 	public void addHikeContactAsFavorite(String version){
 		try {
 			System.out.println("ADDING AS FAVORITE... "+newAppVersion);
 			exitHike();
 			launchHikeWithoutWaitingForPopup();
 			goToHome();
-
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.OVERFLOW_ICON);
 			clickOnElement(Locators.NAME,"Timeline");
 			clickOnElement(Locators.CONTENT_DESCRIPTION,TimelineScreen.FAV_IN_TIMELINE_ICON);
@@ -361,19 +332,19 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			if(isElementPresentOnScreen(Locators.NAME, "Yes")){
 				clickOnElement(Locators.NAME, "Yes");
 			}
-			//			Assert.assertTrue(searchElementInListWithouTAsserting(Locators.NAME,"Added as a favorite"));
 			clickOnElement(Locators.NAME, FavoriteScreen.FAV_TITLE_LBL);
 			clickOnElement(Locators.NAME, TimelineScreen.TIMELINE_TITLE_LBL);
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
 			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 			Assert.assertTrue("Unable to add favorite",isElementPresentOnScreen(Locators.NAME, "FAVORITES"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 	public void setStatusUpdate() throws UiObjectNotFoundException, InterruptedException {
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Set a status update."+"\n"+
+				"2.Check status in profile and timeline");
 		try {
 			System.out.println("SETTING STATUS UPDATE... "+newAppVersion);
 			goToHome();
@@ -381,7 +352,6 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			clickOnElement(Locators.NAME,"Timeline");
 			clickOnElement(Locators.CONTENT_DESCRIPTION,TimelineScreen.POST_A_NEW_UPDATE_ICON);
 			enterText(Locators.NAME,StatusScreen.WHATS_UP_LBL+updatedName+"?", STATUS_UPDATE);
-
 			UiObject view = getElement(Locators.CLASSNAME, "android.view.View");
 			UiObject flayout = getChild(view, Locators.CLASSNAME, "android.widget.FrameLayout", 1);
 			UiObject llayout = getChild(flayout, Locators.CLASSNAME, "android.widget.LinearLayout", 0);
@@ -405,9 +375,101 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			Assert.fail("Unable to update status..");
 		}
 	}
+	public void downloadStickerCategory(String version) throws UiObjectNotFoundException, InterruptedException{
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Download sticker from sticker palatte.");
+		try {
+			System.out.println("Download sticker category from sticker shop");
+			goToHome();
+			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HIKE_CONTACT_NAME);
+			UiObject view = getElement(Locators.CLASSNAME, "android.view.View");
+			UiObject frame = getChild(view, Locators.CLASSNAME, "android.widget.FrameLayout");
+			UiObject r_Layout = getChild(frame, Locators.CLASSNAME, "android.widget.RelativeLayout");
+			UiObject l_Layout = getChild(r_Layout, Locators.CLASSNAME, "android.widget.LinearLayout");
+			UiObject r_Layout1 = getChild(l_Layout, Locators.CLASSNAME, "android.widget.RelativeLayout",2);
+			UiObject r_Layout2 = getChild(r_Layout1, Locators.CLASSNAME, "android.widget.RelativeLayout");
+			UiObject stickerbtn= getChild(r_Layout2, Locators.CLASSNAME, "android.widget.ImageButton");
+			clickOnElement(stickerbtn);
+			UiDevice.getInstance().click(674, 1134);
+			waitForElement(Locators.NAME, StickerShop.FREE_LBL, MAX_TIMEOUT);
+			UiObject rlayout = getElement(Locators.CLASSNAME, "android.widget.RelativeLayout", 1);
+			UiObject llayout = getChild(rlayout, Locators.CLASSNAME, "android.widget.LinearLayout", 2);
+			UiObject download = getChild(llayout, Locators.CLASSNAME, "android.widget.ImageView");
+			clickOnElement(download);
+			Thread.sleep(20000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void togglePrivacyCheckbox(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1.Change last seen settings from privacy screen."+"\n"+
+				"2.Note the status of all elements.");
+		try {
+			System.out.println("CHANGING PRIVACY SETTINGS");
+			goToHome();
+			openOverflowMenu();
+			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
+			clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
+			int count=0;
+			for(int i=0 ; i<5; i++){
+				if(i==1 || i==2 || i==3 || i==4){
+					privacyCheckboxStatus.put(i, false);
+				}
+				else{
+					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(count));
+					object.click();
+					System.out.println("CLICKING ON CHECKBOX");
+					count++;
+					privacyCheckboxStatus.put(i, object.isChecked());
+				}
+			}
+			Iterator iterator = privacyCheckboxStatus.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Map.Entry mapEntry = (Map.Entry) iterator.next();
+				System.out.println("The key is: " + mapEntry.getKey()
+						+ ",value is :" + mapEntry.getValue());
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void blockUser(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Block user from privacy settings."+"\n"+
+				"2. Verify user appears as block from chat thread.");
+		try {
+			System.out.println("Block user from settings");
+			goToHome();
+			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
+			clickOnElement(Locators.NAME, HIKE_CONTACT_NAME_4);
+			sendMessage(TEST_CHAT_MESSAGE);
+			goToHome();
+			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.OVERFLOW_ICON);
+			clickOnElement(Locators.NAME,OverFlowListScreen.SETTINGS_LBL);
+			clickOnElement(Locators.NAME,SettingsScreen.PRIVACY_LBL);
+			clickOnElement(Locators.NAME,PrivacyScreen.BLOCKED_LIST_LBL);
+			enterText(HIKE_CONTACT_NAME_4);
+			UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(0));
+			object.click();
+			blockUserCheckboxStatus.put(0, object.isChecked());
+			clickOnElement(Locators.NAME,BlockedUserScreen.SAVE_LBL);
+			clickOnElement(Locators.NAME, PrivacyScreen.PRIVACY_TITLE_LBL);
+			clickOnElement(Locators.NAME, SettingsScreen.SETTTINGS_TITLE_LBL);
+		} catch (Exception e) {
+			e.printStackTrace();	
+		}
+	}
 	public void toggleNotificationCheckbox(){
 		try {
 			System.out.println("CHANGING NOTIFICATION SETTINGS... "+newAppVersion);
+			System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+					+"1.Change notification settings."+"\n"+
+					"2.Note the status of all elements.");
 			goToHome();
 			openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -418,7 +480,6 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 					clickOnElement(Locators.NAME, "Vibrate on new message");
 					clickOnElement(Locators.NAME, "Off");
 					notificationCheckboxStatus.put(i, false);
-
 				}
 				else if(i==3){
 					clickOnElement(Locators.NAME, "Select a sound to play for a new notification");
@@ -439,10 +500,12 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			e.printStackTrace();
 		}
 	}
-
 	public void verifyAutoDownloadCheckboxPersistence(String old_version, String new_version,UpdateLibrary ul){
 		try {
 			System.out.println("VERIFYING AUTO DOWNLOAD SETTING PERSISTENCE... "+newAppVersion);
+			System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+					+"1.Auto Download settings should be same after upgrade."+"\n"+
+					"2.Default settings should be applicable to new options.");
 			super.goToHome();
 			super.openOverflowMenu();
 			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
@@ -450,7 +513,6 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			UiObject Auto_Download_media = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_CONNECTED_TO_WIFI_LBL);
 			UiObject Mobile_Data_Lable = getElement(Locators.NAME, AutoDownloadMediaScreen.WHEN_ON_MOBILE_DATA_LBL);
 			UiDevice.getInstance().swipe(Auto_Download_media.getBounds().centerX(), Auto_Download_media.getBounds().centerY(), Mobile_Data_Lable.getBounds().centerX(), Mobile_Data_Lable.getBounds().centerY(), 5);
-
 			if(new_version.equals(newAppVersion)){			
 				if(old_version.equals("3.7.0") || old_version.equals("3.6.6") || old_version.equals("3.6.0") || old_version.equals("3.5.1"))
 				{
@@ -490,11 +552,6 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 						}
 					}
 					else {
-//						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));
-//						boolean wasChecked = autoDownloadCheckboxStatus.get(i);
-//						boolean isChecked = object.isChecked();
-//						Assert.assertTrue(wasChecked==isChecked);
-						
 						UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(i));					
 						boolean wasChecked = ul.autoDownloadCheckboxStatus.get(i-1);
 						System.out.println(wasChecked);
@@ -522,7 +579,25 @@ public class UpdateLibrary_3_9_8 extends UpdateLibrary{
 			UiDevice.getInstance().click(108, 267);
 			clickOnElement(Locators.NAME,"Next");
 			clickOnElement(Locators.NAME, ChooseImageQualityScreen.SEND_BTN);
-			Assert.assertTrue("Failed to redirect to chat thread",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.MEMBER_LBL));
+			Assert.assertTrue("Failed to redirect to chat thread",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.PEOPLE_LBL));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void addMemberToGroup(){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Add member to the created group.");
+		try {
+			clickOnElement(Locators.NAME, groupName);
+			clickOnElement(Locators.NAME, groupName);
+			Thread.sleep(2000);
+			clickOnElement(Locators.NAME,GroupInfoScreen.ADD_A_MEMBER_ICON);
+			clickElementInList(Locators.NAME, HIKE_CONTACT_NAME);
+			clickElementInList(Locators.NAME,HIKE_CONTACT_NAME_1);
+			clickOnElement(Locators.NAME,NewGroupParticipantSelectionScreen.DONE_LBL);
+			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME_1+" and "+HIKE_CONTACT_NAME+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
+			//						Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME+" and "+HIKE_CONTACT_NAME_1+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
 
 		} catch (Exception e) {
 			e.printStackTrace();
