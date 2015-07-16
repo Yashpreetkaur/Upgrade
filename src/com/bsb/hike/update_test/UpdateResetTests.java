@@ -35,6 +35,7 @@ import com.bsb.hike.library.UpdateLibrary_3_9_2;
 import com.bsb.hike.library.UpdateLibrary_3_9_6;
 import com.bsb.hike.library.UpdateLibrary_3_9_7;
 import com.bsb.hike.library.UpdateLibrary_3_9_8;
+import com.bsb.hike.library.UpdateLibrary_3_9_8_81;
 
 
 public class UpdateResetTests extends UpdateLibrary {
@@ -218,8 +219,11 @@ public class UpdateResetTests extends UpdateLibrary {
 		else if(version.equals("3.9.7")){
 			ul=new UpdateLibrary_3_9_7();
 		}
-		else if(version.equals(newAppVersion)){
+		else if(version.equals("3.9.8")){
 			ul=new UpdateLibrary_3_9_8();
+		}
+		else if(version.equals("3.9.8.81")){
+			ul=new UpdateLibrary_3_9_8_81();
 		}
 		else{
 			ul=new UpdateLibrary();

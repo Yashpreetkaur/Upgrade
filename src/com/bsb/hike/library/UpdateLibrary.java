@@ -91,8 +91,8 @@ public class UpdateLibrary extends HikeLibrary{
 	public RedisServiceManagerUtil redis = RedisServiceManagerUtil.getInstance();
 	public MongoDBManagerUtil mongo = MongoDBManagerUtil.getInstance();
 	public  DB userDB = mongo.getMongo().getDB("userdb");
-	public static String[] appVersions={"3.9.7","3.9.6","3.9.2"};	//// "3.9.6","3.9.2","3.9.6","3.9.2","3.9.0",,,"3.9.6", "3.9.2",,"3.9.2","3.9.0""3.9.2","2.7.0","2.7.1","2.8.0","2.8.2","2.8.5","2.9.0","2.9.6","3.0.0","3.0.1","3.1.0","3.2.0","3.3.0","3.3.1"
-	public static String newAppVersion="3.9.8";
+	public static String[] appVersions={"3.9.8.81","3.9.8","3.9.7","3.9.6","3.9.0"};
+	public static String newAppVersion="3.9.8.82";
 	public HashMap<String, List<String>> hikeMsgHm =new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsgSm=new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsGrp=new HashMap<String, List<String>>(); ;

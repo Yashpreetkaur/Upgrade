@@ -39,7 +39,7 @@ import com.bsb.hike.popup.screen.ChooseImageQualityScreen;
 import com.bsb.hike.popup.screen.ConfirmYourNumberPopUpScreen;
 import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 
-public class UpdateLibrary_3_9_8_31 extends UpdateLibrary{
+public class UpdateLibrary_3_9_8_81 extends UpdateLibrary{
 	public void createNewUser(String version) throws UiObjectNotFoundException, InterruptedException, RemoteException   {
 		System.out.println("CREATING NEW USER... "+newAppVersion);
 
