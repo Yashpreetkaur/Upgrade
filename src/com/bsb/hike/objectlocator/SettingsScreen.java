@@ -16,6 +16,7 @@ public class SettingsScreen {
 	public static String SMS_LBL ="SMS (Free SMS: ";//add getSMSCredit + )
 	public static String SMS_SUBTITLE_LBL ="SMS settings";
 	public static String ACCOUNT_LBL ="Account";
+	public static String CHAT_SETTINGS_LBL ="Chat Settings";
 	public static String ACCOUNT_SUBTITLE_LBL ="Your Hike Account Settings";
 	public static String PRIVACY_LBL ="Privacy";
 	public static String PRIVACY_SUBTITLE_LBL ="Your Hike privacy Settings";

@@ -16,11 +16,15 @@ import com.android.uiautomator.core.UiObjectNotFoundException;
 import com.android.uiautomator.core.UiSelector;
 import com.bsb.hike.common.AndroidClassNames;
 import com.bsb.hike.common.Locators;
+import com.bsb.hike.objectlocator.AttachmentListScreen;
 import com.bsb.hike.objectlocator.AutoDownloadMediaScreen;
 import com.bsb.hike.objectlocator.BlockedUserScreen;
+import com.bsb.hike.objectlocator.ChatThreadScreen;
 import com.bsb.hike.objectlocator.EditProfileScreen;
 import com.bsb.hike.objectlocator.FavoriteScreen;
+import com.bsb.hike.objectlocator.GroupInfoScreen;
 import com.bsb.hike.objectlocator.HomeScreen;
+import com.bsb.hike.objectlocator.ImageSelectionScreen;
 import com.bsb.hike.objectlocator.LoginAboutYouScreen;
 import com.bsb.hike.objectlocator.LoginPhoneNumberScreen;
 import com.bsb.hike.objectlocator.MyProfileOverflowOptionsScreen;
@@ -34,6 +38,7 @@ import com.bsb.hike.objectlocator.StatusScreen;
 import com.bsb.hike.objectlocator.StickerShop;
 import com.bsb.hike.objectlocator.TimelineScreen;
 import com.bsb.hike.objectlocator.WelcomeScreen;
+import com.bsb.hike.popup.screen.ChooseImageQualityScreen;
 import com.bsb.hike.popup.screen.ConfirmYourNumberPopUpScreen;
 import com.bsb.hike.qa.apisupport.Hike2HikeMessageSupport;
 
@@ -566,6 +571,7 @@ public class UpdateLibrary_3_9_2 extends UpdateLibrary{
 			e.printStackTrace();
 		}
 	}
+	
 	public void togglePrivacyCheckbox(String version){
 		System.out.println("Toggle privacy... "+version);
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
@@ -579,7 +585,7 @@ public class UpdateLibrary_3_9_2 extends UpdateLibrary{
 			clickOnElement(Locators.NAME , SettingsScreen.PRIVACY_LBL);
 			int count=0;
 			for(int i=0 ; i<5; i++){
-				if(i==0 || i==2){
+				if(i==0){
 					UiObject object = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(count));
 					object.click();
 					System.out.println("CLICKING ON CHECKBOX");
@@ -602,6 +608,31 @@ public class UpdateLibrary_3_9_2 extends UpdateLibrary{
 		}
 	}
 
+	public void shareMediaToGroup(String version){
+		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
+				+"1. Share media in the group and verify shared media appears under group info.");
+		try {
+			System.out.println("Sharing media to the group");
+			goToHome();
+			clickOnElement(Locators.NAME, Updated_Test_Group_Name);
+			clickOnElement(Locators.CONTENT_DESCRIPTION, ChatThreadScreen.ATTACH_ICON);
+			clickOnElement(Locators.NAME, AttachmentListScreen.GALLERY_LBL);
+			UiDevice.getInstance().click(171, 302);
+			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.TAP_AND_HOLD_TO_SELECT_MULTIPLE_FILES));
+
+//			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.CHOOSE_A_PHOTO));
+			UiDevice.getInstance().click(108, 267);
+			clickOnElement(Locators.NAME,"Send");
+
+//			clickOnElement(Locators.NAME,"Next");
+//			clickOnElement(Locators.NAME, PreviewScreen.SEND_BTN);
+			clickOnElement(Locators.NAME, ChooseImageQualityScreen.SEND_BTN);
+			Assert.assertTrue("Failed to redirect to chat thread",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.PEOPLE_LBL));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 }

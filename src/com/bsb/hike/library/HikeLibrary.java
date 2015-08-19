@@ -14,6 +14,8 @@ import java.util.Properties;
 import org.junit.Assert;
 
 import android.graphics.Point;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 
 import com.android.uiautomator.core.UiDevice;
 import com.android.uiautomator.core.UiObject;
@@ -135,7 +137,7 @@ public class HikeLibrary extends UiAutomatorLibrary{
 
 	HashMap<String, String> Contacts = new HashMap<String, String>();
 
-
+	public static String StickerTag = "yo,boss";
 	public static String DEF_DIGIT ="711777";
 	public static String DEFAULT_MSISDN ; //RandomStringUtils.randomNumeric(4);
 
@@ -183,7 +185,27 @@ public class HikeLibrary extends UiAutomatorLibrary{
 
 		}
 	}
+	public void convertStringToKeyCode(String text) {
 
+		KeyCharacterMap mKeyCharacterMap = KeyCharacterMap
+				.load(KeyCharacterMap.SPECIAL_FUNCTION);
+		int keycode = 0;
+
+		KeyEvent[] events = mKeyCharacterMap.getEvents(text.toCharArray());
+		for (KeyEvent event2 : events) {
+			if (event2.getAction() == 0) {
+				keycode = event2.getKeyCode();
+				System.out.println(keycode + " ");
+				if (keycode >= 0 && keycode <= 16) {
+					UiDevice.getInstance().pressKeyCode(keycode);
+				} else if (keycode >= 29 && keycode <= 54) {
+					UiDevice.getInstance().pressKeyCode(keycode);
+				} else {
+					UiDevice.getInstance().pressKeyCode(keycode, 1);
+				}
+			}
+		}
+	}
 	public static String getDEFAULT_MSISDN() {
 		setDEFAULT_MSISDN();
 		return "+91"+DEFAULT_MSISDN;
@@ -929,4 +951,6 @@ public class HikeLibrary extends UiAutomatorLibrary{
 		UiObject sendButton = R0layout.getChild(new UiSelector().className("android.widget.ImageButton").index(sendButtonIndex));
 		sendButton.click();
 	}
+	
+	
 }

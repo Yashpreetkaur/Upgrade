@@ -91,8 +91,8 @@ public class UpdateLibrary extends HikeLibrary{
 	public RedisServiceManagerUtil redis = RedisServiceManagerUtil.getInstance();
 	public MongoDBManagerUtil mongo = MongoDBManagerUtil.getInstance();
 	public  DB userDB = mongo.getMongo().getDB("userdb");
-	public static String[] appVersions={"3.9.8.81","3.9.8","3.9.7","3.9.6","3.9.0"};
-	public static String newAppVersion="3.9.8.82";
+	public static String[] appVersions={"3.9.9","3.9.9.81"};//,"3.9.7","3.9.6","3.9.2"
+	public static String newAppVersion="3.9.9.82";
 	public HashMap<String, List<String>> hikeMsgHm =new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsgSm=new HashMap<String, List<String>>();
 	public HashMap<String, List<String>> hikeMsGrp=new HashMap<String, List<String>>(); ;
@@ -273,7 +273,18 @@ public class UpdateLibrary extends HikeLibrary{
 	}
 
 
+	public void sendHikeMessage(){
+		try {
 
+			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
+			enterText(HIKE_NUMBER_1);
+			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
+			sendMessage("Hi");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void sendHikeMessage(String version){
 		System.out.println("INSTRUMENTATION DESCRIPTION:"+"\n"
@@ -295,7 +306,6 @@ public class UpdateLibrary extends HikeLibrary{
 			hikeMsgHm.put("+911234555247", listOfMessages);
 			Assert.assertTrue("message is not sent", isElementPresentOnScreen(Locators.NAME,messageSent));
 			goToHome();		
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail("Unable to send message");
@@ -1130,8 +1140,6 @@ public class UpdateLibrary extends HikeLibrary{
 			System.out.println("VERIFYING FAVORITE LIST PERSISTENCE");
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 			Assert.assertTrue("Favorite does not persist",isElementPresentOnScreen(Locators.NAME,NewChatContactSelectScreen.FAVORITE_LBL));
 			clickOnElement(Locators.NAME, ul.favorite);
 			clickOnElement(Locators.NAME, ul.favorite);
@@ -1185,8 +1193,6 @@ public class UpdateLibrary extends HikeLibrary{
 			String message = "message after upgrade..";
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 			enterText(msisdn);
 
 			clickOnElement(Locators.NAME, NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
@@ -1197,8 +1203,8 @@ public class UpdateLibrary extends HikeLibrary{
 
 			super.goToHome();
 
-//			Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_NOW_AGO_LBL));
-			Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_MOMENTS_AGO_LBL));
+			Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_NOW_AGO_LBL));
+			//			Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_MOMENTS_AGO_LBL));
 
 			Assert.assertTrue("User is not able to Send message", isElementPresentOnScreen(Locators.NAME,message));
 			//    		Assert.assertTrue("User is not able to send Message", isElementPresentOnScreen(name))// need to assert for message status after getting the name
@@ -1241,8 +1247,8 @@ public class UpdateLibrary extends HikeLibrary{
 		if(!isElementPresentOnScreen(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL)){
 			UiDevice.getInstance().pressBack();
 		}
-//		Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_NOW_AGO_LBL));
-		Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_MOMENTS_AGO_LBL));
+		Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_NOW_AGO_LBL));
+		//		Assert.assertTrue("User is not able to Send Message", isElementPresentOnScreen(Locators.NAME,ConversationScreen.LBL_MOMENTS_AGO_LBL));
 
 		Assert.assertTrue("User is not able to Send message", isElementPresentOnScreen(Locators.NAME,groupMessage));
 
@@ -1303,7 +1309,6 @@ public class UpdateLibrary extends HikeLibrary{
 
 			super.goToHome();
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 
 			Assert.assertTrue("not able to add favorite",isElementPresentOnScreen(Locators.NAME,NewChatContactSelectScreen.FAVORITE_LBL));
 			System.out.println("ssssssssssssssssssssssss"+fav_name);
@@ -1388,8 +1393,6 @@ public class UpdateLibrary extends HikeLibrary{
 			goToHome();
 
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
-
 			clickOnElement(Locators.NAME, HIKE_CONTACT_NAME);
 			UiObject view = getElement(Locators.CLASSNAME, "android.view.View");
 			UiObject frame = getChild(view, Locators.CLASSNAME, "android.widget.FrameLayout");
@@ -1482,7 +1485,9 @@ public class UpdateLibrary extends HikeLibrary{
 			clickElementInList(Locators.NAME, HIKE_CONTACT_NAME);
 			clickElementInList(Locators.NAME,HIKE_CONTACT_NAME_1);
 			clickOnElement(Locators.NAME,NewGroupParticipantSelectionScreen.DONE_LBL);
-			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME_1+" and "+HIKE_CONTACT_NAME+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
+			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME_1+" and "+HIKE_CONTACT_NAME));
+
+//						Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME_1+" and "+HIKE_CONTACT_NAME+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
 			//			Assert.assertTrue("Failed to add member to the group", isElementPresentOnScreen(Locators.NAME,ChatEventsObject.GROUP_CHAT_NAME_ADDED_EVENT +HIKE_CONTACT_NAME+" and "+HIKE_CONTACT_NAME_1+ChatEventsObject.GROUP_CHAT_ADD_PARTICIPANT_EVENT));
 
 		} catch (Exception e) {
@@ -1606,7 +1611,7 @@ public class UpdateLibrary extends HikeLibrary{
 			goToHome();
 			Assert.assertTrue("Created group does not persists after upgrade",isElementPresentOnScreen(Locators.NAME,Updated_Test_Group_Name));
 			clickOnElement(Locators.NAME, Updated_Test_Group_Name);
-			Assert.assertTrue("Failed to persist group members count",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.PEOPLE_LBL));
+			Assert.assertTrue("Failed to persist group members count",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.MEMBER_LBL));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1674,14 +1679,14 @@ public class UpdateLibrary extends HikeLibrary{
 			clickOnElement(Locators.CONTENT_DESCRIPTION, ChatThreadScreen.ATTACH_ICON);
 			clickOnElement(Locators.NAME, AttachmentListScreen.GALLERY_LBL);
 			UiDevice.getInstance().click(171, 302);
-			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.TAP_AND_HOLD_TO_SELECT_MULTIPLE_FILES));
+			//			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.TAP_AND_HOLD_TO_SELECT_MULTIPLE_FILES));
 
-//			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.CHOOSE_A_PHOTO));
+			Assert.assertTrue("Failed to switch to gallery view", isElementPresentOnScreen(Locators.NAME, ImageSelectionScreen.CHOOSE_A_PHOTO));
 			UiDevice.getInstance().click(108, 267);
 			clickOnElement(Locators.NAME,"Send");
 
-//			clickOnElement(Locators.NAME,"Next");
-//			clickOnElement(Locators.NAME, PreviewScreen.SEND_BTN);
+			//			clickOnElement(Locators.NAME,"Next");
+			//			clickOnElement(Locators.NAME, PreviewScreen.SEND_BTN);
 			clickOnElement(Locators.NAME, ChooseImageQualityScreen.SEND_BTN);
 			Assert.assertTrue("Failed to redirect to chat thread",isElementPresentOnScreen(Locators.NAME,"4"+GroupInfoScreen.PEOPLE_LBL));
 
@@ -1834,7 +1839,7 @@ public class UpdateLibrary extends HikeLibrary{
 				+"1.Last seen settings should be same after upgrade."+"\n"+
 				"2.Default settings should be applicable to new options.");
 		if(old_version.equals("3.9.2") || old_version.equals("3.9.6")){
-	
+
 			try {
 				System.out.println("VERIFYING PRIVACY SETTING PERSISTENCE");
 				super.goToHome();
@@ -2042,7 +2047,6 @@ public class UpdateLibrary extends HikeLibrary{
 				}       
 			}
 			clickOnElement(Locators.CONTENT_DESCRIPTION, HomeScreen.START_A_NEW_CHAT_LBL);
-			clickOnElement(Locators.NAME, HomeScreen.NEW_CHAT_LBL);
 			enterText(HIKE_NUMBER_1);
 			clickOnElement(Locators.NAME,NewChatContactSelectScreen.TAP_TO_START_CHAT_LBL);
 			super.goToHome();
@@ -2065,6 +2069,46 @@ public class UpdateLibrary extends HikeLibrary{
 			e.printStackTrace();
 		}
 	}
+
+	public void sendRecommSticker(){
+		try {
+			String[] tag = StickerTag.split(",");
+			clickOnElement(Locators.CONTENT_DESCRIPTION,
+					HomeScreen.START_A_NEW_CHAT_LBL);
+			String msisdn = getDEFAULT_MSISDN();
+			enterText(msisdn);
+			clickElementInList(Locators.NAME, msisdn);
+			int i = 0;
+			for (i = 0; i < tag.length; i++) {
+				System.out.println("Tag" + i + "......" + tag[i]);
+				System.out.println("text length.... " + tag[i].length());
+				convertStringToKeyCode(tag[i]);
+
+				UiObject sktpalatte = getElement(Locators.CLASSNAME,
+						"android.support.v7.widget.RecyclerView");
+				UiObject sticker = getChild(sktpalatte, Locators.CLASSNAME,
+						"android.widget.ImageView");
+				clickOnElement(sticker);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void verifyStickerRecommendationSettings(){
+		try {
+			goToHome();
+			openOverflowMenu();
+			clickOnElement(Locators.NAME, OverFlowListScreen.SETTINGS_LBL);
+			clickOnElement(Locators.NAME, SettingsScreen.CHAT_SETTINGS_LBL);
+			UiObject TapMode = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(2));
+			UiObject AutoMode = new UiObject(new UiSelector().className("android.widget.CheckBox").instance(3));	
+			Assert.assertTrue("Sticker suggestion tap mode is not checked", TapMode.isChecked());
+			Assert.assertTrue("Sticker suggestion auto mode is not checked", AutoMode.isChecked());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}	}
 
 }
 
